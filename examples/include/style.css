@@ -1,0 +1,106 @@
+/* Some HTML5 Tags
+ */
+
+aside, footer, header, nav, section {
+  display: block;
+}
+
+/* Examples
+ */
+
+body {
+  background-color: #bbb;
+  color: #383838;
+}
+
+#canvas {
+  background-color: #fff;
+}
+
+header {
+  padding-bottom: 10px;
+}
+
+header a {
+  color: #30f;
+  text-decoration: none;
+}
+
+aside {
+  padding-top: 6px;
+}
+
+/* Index page
+ */
+
+#index-body {
+  background-color: #9497FF;
+  font-family: "Vollkorn", serif;
+  color: #000;
+}
+
+#index-body a {
+  text-decoration: none;
+  color: #0C2C9F
+}
+
+#index-body #description, #index-body #exercises {
+  overflow: auto;
+  max-width: 750px;
+  margin: 20px auto 20px auto;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  background-color: #fff;
+  border-radius: 15px;
+}
+
+#index-body h1 {
+  color: #b30300;
+}
+
+#index-body h1 a {
+  text-decoration: underline;
+  color: #b30300;
+}
+
+#index-body li h2, #index-body li h3, #index-body li h4 {
+  color: #000;
+}
+
+#index-body li h3 {
+  margin-bottom: 0px;
+}
+
+#description ul {
+  margin: 0;
+  padding: 4px 20px 10px 20px;
+}
+
+#description iframe {
+  float: right;
+  margin: 15px 0 15px 15px;
+}
+
+#exercises ol {
+  margin: 0 20px 10px 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+#exercises ol li {
+  padding-top: 5px;
+}
+
+#exercises ol ol ol {
+  padding-left: 60px;
+  list-style-type: decimal-leading-zero;
+}
+
+#exercises ol ol ol li img, #exercises ol ol li img {
+  margin-left: 4px;
+  margin-bottom: -10;
+}
+
+#exercises h2 {
+  margin: 10px 0 0 0;
+}

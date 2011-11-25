@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Key Codes</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <aside>Open debugging console in web browser and press arrow key.</aside>
+    
+    <script>
+    window.onload = function () {
+
+      function onKeyboardEvent (event) {
+        switch (event.keyCode) {
+        case 38:
+          console.log("up!");
+          break;
+        case 40:
+          console.log("down!");
+          break;
+        case 37:
+          console.log("left!");
+          break;
+        case 39:
+          console.log("right!");
+          break;
+        default:
+          console.log(event.keyCode);
+        }
+      }
+
+      window.addEventListener('keydown', onKeyboardEvent, false);
+    };
+    </script>
+  </body>
+</html>

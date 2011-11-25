@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Key Names</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <aside>Open debugging console in web browser and press arrow key.</aside>
+    
+    <script src="../../xtras/keycode.js"></script>
+    <script>
+    window.onload = function () {
+
+      function onKeyboardEvent (event) {
+        switch (event.keyCode) {
+        case keycode.UP:
+          console.log("up!");
+          break;
+        case keycode.DOWN:
+          console.log("down!");
+          break;
+        case keycode.LEFT:
+          console.log("left!");
+          break;
+        case keycode.RIGHT:
+          console.log("right!");
+          break;
+        default:
+          console.log(event.keyCode);
+        }
+      }
+
+      window.addEventListener('keydown', onKeyboardEvent, false);
+    };
+    </script>
+  </body>
+</html>

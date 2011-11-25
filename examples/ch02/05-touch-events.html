@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Touch Events</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Open debugging console in web browser of touch-capable device.</aside>
+    
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas');
+
+      function onTouchEvent (event) {
+        console.log(event.type);
+      }
+
+      canvas.addEventListener('touchstart', onTouchEvent, false);
+      canvas.addEventListener('touchend', onTouchEvent, false);
+      canvas.addEventListener('touchmove', onTouchEvent, false);
+    };
+    </script>
+  </body>
+</html>

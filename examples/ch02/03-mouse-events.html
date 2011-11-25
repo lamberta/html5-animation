@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Mouse Events</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Open debugging console in web browser and move/click mouse.</aside>
+    
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas');
+
+      function onMouseEvent (event) {
+        console.log(event.type);
+      }
+
+      canvas.addEventListener('mousedown', onMouseEvent, false);
+      canvas.addEventListener('mouseup', onMouseEvent, false);
+      canvas.addEventListener('click', onMouseEvent, false);
+      canvas.addEventListener('dblclick', onMouseEvent, false);
+      canvas.addEventListener('mousewheel', onMouseEvent, false);
+      canvas.addEventListener('mousemove', onMouseEvent, false);
+      canvas.addEventListener('mouseover', onMouseEvent, false);
+      canvas.addEventListener('mouseout', onMouseEvent, false);
+    };
+    </script>
+  </body>
+</html>

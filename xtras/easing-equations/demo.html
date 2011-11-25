@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Easing Equations</title>
+    <link rel="stylesheet" href="../../examples/include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400">
+      <p>Your browser does not support the <code>canvas</code> element.</p>
+    </canvas>
+
+    <form id="ease_selection">
+      <label for="ease_type">Type</label>
+      <select id="ease_type" name="ease_type">
+        <option value="linear" selected="selected">Linear</option>
+        <option value="quad">Quadratic</option>
+        <option value="cubic">Cubic</option>
+        <option value="quart">Quartic</option>
+        <option value="quint">Quintic</option>
+        <option value="sine">Sinusoidal</option>
+        <option value="expo">Exponential</option>
+        <option value="circ">Circular</option>
+        <option value="back">Back</option>
+        <option value="bounce">Bounce</option>
+        <option value="elastic">Elastic</option>
+      </select>
+      <label for="ease_position">Position</label>
+      <select id="ease_position" name="ease_position">
+        <option value="easeIn" selected="selected">Ease In</option>
+        <option value="easeOut">Ease Out</option>
+        <option value="easeInOut">Ease In/Out</option>
+        <option value="easeOutIn">Ease Out/In</option>
+      </select>
+      <label for="ease_duration">Duration</label>
+      <select id="ease_duration" name="ease_duration">
+        <option value="10">10</option>
+        <option value="20" selected="selected">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+      </select>
+    </form>
+
+    <aside>Select an easing type and click the canvas element to move ball.</aside>
+
+    <script src="../../examples/include/utils.js"></script>
+    <script src="../../examples/ch08/classes/ball.js"></script>
+    <script src="easing.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          form = document.getElementById('ease_selection'),
+          mouse = utils.captureMouse(canvas),
+          ball = new Ball(),
+          isTweening = false,
+          time,
+          duration,
+          start_x,
+          start_y,
+          target_x,
+          target_y,
+          change_x,
+          change_y,
+          easing_function;
+
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height / 2;
+
+      function tweenBall () {
+        change_x = target_x - start_x;
+        change_y = target_y - start_y;
+        ball.x = easing_function(time, start_x, change_x, duration);
+        ball.y = easing_function(time, start_y, change_y, duration);
+        time += 1;
+        if (time > duration) {
+          isTweening = false;
+        }
+      }
+
+      //setup new tween variables on click
+      canvas.addEventListener('mousedown', function (evt) {
+        var type = form['ease_type'].value,
+            position = form['ease_position'].value;
+        
+        easing_function = easing[type][position];
+        duration = parseInt(form['ease_duration'].value);
+        time = 0;
+        start_x = ball.x;
+        start_y = ball.y;
+        target_x = mouse.x;
+        target_y = mouse.y;
+        isTweening = true;
+      }, false);
+        
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (isTweening) {
+          tweenBall();
+        }
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>
