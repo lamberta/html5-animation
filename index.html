@@ -1,0 +1,886 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Foundation HTML5 Animation with JavaScript</title>
+    <link rel="stylesheet" href="./examples/include/style.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Vollkorn">
+  </head>
+  <body id="index-body">
+
+    <section id="description">
+      <iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&bc1=FFFFFF&IS2=1&npa=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=html5anim-20&o=1&p=8&l=as1&m=amazon&f=ifr&ref=tf_til&asins=1430236655" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+      <h1><a href="http://amzn.com/1430236655?tag=html5anim-20">Foundation HTML5 Animation with JavaScript</a></h1>
+      <p><em>Foundation HTML5 Animation with JavaScript</em>, by <a href="http://lamberta.org">Billy Lamberta</a> and <a href="http://www.bit-101.com">Keith Peters</a>, covers everything that you need to know to create dynamic, scripted animations using the HTML5 canvas. It provides information on all the relevant math you'll need, before moving on to physics concepts like acceleration, velocity, easing, springs, collision detection, conservation of momentum, 3D, and forward and inverse kinematics. <em>Foundation HTML5 Animation with JavaScript</em> is a fantastic resource for all web developers working in HTML5 or switching over from Flash to create standards-compliant games, applications, and animations that will work across all modern browsers and most mobile devices, including iPhones, iPads, and Android devices.</p>
+      <em>What you'll have fun learning:</em>
+      <ul>
+        <li>All the JavaScript and HTML5 code (including math and trigonometry functions) you'll need to start animating with code.</li>
+        <li>Basic motion principles like velocity, acceleration, friction, easing, and bouncing.</li>
+        <li>How to handle user interactions via the keyboard, mouse, and touchscreen.</li>
+        <li>Advanced motion techniques like springs, coordinate rotation, conservation of momentum, and forward and inverse kinematics.</li>
+        <li>All the basic 3D concepts you'll need for 3D in HTML5 (without WebGL)—from simple perspective to full 3D solids, complete with backface culling and dynamic lighting.</li>
+      </ul>
+    </section>
+
+    <section id="exercises">
+      <h1>Table of Contents and Exercises</h1>
+      <ol>
+        <li>
+          <h2>Part One: JavaScript Animation Basics</h2>
+          <ol>
+            <li>
+              <h3>Chapter 1: Basic Animation Concepts</h3>
+            </li>
+            
+            <li>
+              <h3>Chapter 2: Basics of JavaScript for Animation</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch02/01-skeleton.html">Our Basic HTML5 Canvas Setup</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch02/01-skeleton.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch02/02-event-demo.html">JavaScript Event Demonstration</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch02/02-event-demo.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch02/03-mouse-events.html">Listening for Mouse Events</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch02/03-mouse-events.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch02/04-mouse-position.html">Capture the Mouse Position</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch02/04-mouse-position.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch02/05-touch-events.html">Listening for Touch Events</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch02/05-touch-events.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch02/06-keyboard-events.html">Listening for Keyboard Events</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch02/06-keyboard-events.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch02/07-key-codes.html">Capture a Keyboard Event by Key Code</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch02/07-key-codes.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch02/08-key-names.html">Capture a Keyboard Event by Key Name</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch02/08-key-names.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+            
+            <li>
+              <h3>Chapter 3: Trigonometry for Animation</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch03/01-rotate-to-mouse.html">Rotate an Object Towards a Point</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/01-rotate-to-mouse.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/02-bobbing-1.html">Smooth Up and Down Motion</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/02-bobbing-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/03-bobbing-2.html">Set the Range, Speed, and Center of the Motion</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/03-bobbing-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/04-wave-1.html">Add Linear Vertical Motion to Make a Wave</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/04-wave-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/05-pulse.html">Create a Pulsing Motion by Adjusting Scale</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/05-pulse.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/06-random.html">Wave Motion Using Two Angles</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/06-random.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/07-wave-2.html">Draw a Wave to the Canvas Element</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/07-wave-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/08-circle.html">Circular Movement</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/08-circle.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/09-oval.html">Elliptical Movement</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/09-oval.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/10-distance.html">Using the Pythagorean Theorem to Calculate Distance</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/10-distance.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch03/11-mouse-distance.html">Find the Distance Between the Center Point and Mouse</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch03/11-mouse-distance.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 4: Rendering Techniques</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch04/01-drawing-app.html">Drawing App</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/01-drawing-app.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/02-drawing-curves.html">Draw Curve Toward Point</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/02-drawing-curves.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/03-curve-through-point.html">Draw Curve Through Point</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/03-curve-through-point.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/04-multi-curve-1.html">Joined Multiple Curves</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/04-multi-curve-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/05-multi-curve-2.html">Smoothly Joined Multiple Curves</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/05-multi-curve-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/06-multi-curve-3.html">Smoothly Joined Multiple Curves in Closed Path</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/06-multi-curve-3.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/07-gradient-fill-1.html">Linear Gradient Fill</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/07-gradient-fill-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/08-gradient-fill-2.html">Linear Gradient Fill with Different Position</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/08-gradient-fill-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/09-gradient-fill-radial.html">Radial Gradient Fill</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/09-gradient-fill-radial.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/10-load-image.html">Load Image with JavaScript and Draw</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/10-load-image.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/11-embed-image.html">Draw an HTML Image Element</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/11-embed-image.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/12-video-frames.html">Draw Frames of an HTML5 Video Element</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/12-video-frames.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/13-invert-color.html">Invert Color of Canvas Pixels</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/13-invert-color.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/14-grayscale.html">Covert Canvas Pixels to Grayscale</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/14-grayscale.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/15-pixel-move.html">Dynamic Manipulation of Canvas Pixels</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/15-pixel-move.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch04/16-spray-paint.html">Spray Paint Drawing App</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch04/16-spray-paint.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+
+        <li>
+          <h2>Part Two: Basic Motion</h2>
+          <ol>
+            <li>
+              <h3>Chapter 5: Velocity and Acceleration</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch05/01-velocity-1.html">Velocity on One Axis</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/01-velocity-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/02-velocity-2.html">Velocity on Two Axes</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/02-velocity-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/03-velocity-angle.html">Angular Velocity</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/03-velocity-angle.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/04-follow-mouse-1.html">Using Angular Velocity to Follow the Mouse</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/04-follow-mouse-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/05-rotational-velocity.html">Applying Velocity to an Object's Rotation Property</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/05-rotational-velocity.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/06-acceleration-1.html">Acceleration on One Axis</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/06-acceleration-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/07-acceleration-2.html">Applying Acceleration Interactively</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/07-acceleration-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/08-acceleration-3.html">Acceleration on Two Axis</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/08-acceleration-3.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/09-gravity.html">Gravity as Applied Acceleration</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/09-gravity.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/10-follow-mouse-2.html">Using Angular Acceleration to Follow the Mouse</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/10-follow-mouse-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch05/11-ship-sim.html">Spaceship Simulation</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch05/11-ship-sim.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 6: Boundaries and Friction</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch06/01-removal.html">Remove Object at Boundaries</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch06/01-removal.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch06/02-fountain.html">Fountain of Regenerating Objects</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch06/02-fountain.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch06/03-ship-sim-2.html">Spaceship Simulation with Screen Wrapping</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch06/03-ship-sim-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch06/04-bouncing-1.html">Bounce Off Walls</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch06/04-bouncing-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch06/05-bouncing-2.html">Bounce Off Walls with Gravity</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch06/05-bouncing-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch06/06-friction-1.html">Friction, The Right Way</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch06/06-friction-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch06/07-friction-2.html">Friction, The Easy Way</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch06/07-friction-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch06/08-ship-sim-friction.html">Spaceship Simulation with Friction Applied</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch06/08-ship-sim-friction.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 7: User Interaction: Moving Objects Around</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch07/01-mouse-events.html">Listening for Mouse Events on an Object</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch07/01-mouse-events.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch07/02-touch-events.html">Listening for Touch Events on an Object</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch07/02-touch-events.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch07/03-mouse-move-drag.html">Dragging an Object</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch07/03-mouse-move-drag.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch07/04-drag-and-move-1.html">Combining Dragging and Motion Code</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch07/04-drag-and-move-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch07/05-drag-and-move-2.html">Drag an Object and Reset its Velocity</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch07/05-drag-and-move-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch07/06-throwing.html">Throwing an Object</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch07/06-throwing.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+
+        <li>
+          <h2>Part Three: Advanced Motion</h2>
+          <ol>
+            <li>
+              <h3>Chapter 8: Easing and Springing</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch08/01-easing-1.html">Simple Easing</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/01-easing-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/02-easing-2.html">Dragging and Easing</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/02-easing-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/03-easing-off.html">Turn Off Easing</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/03-easing-off.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/04-ease-to-mouse.html">Ease to a Moving Target</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/04-ease-to-mouse.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/05-spring-1.html">Springing in One Dimension</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/05-spring-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/06-spring-2.html">Springing with Friction Applied</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/06-spring-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/07-spring-3.html">Springing in Two Dimensions</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/07-spring-3.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/08-spring-4.html">Springing to a Moving Target</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/08-spring-4.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/09-spring-5.html">Add Gravity and Draw Spring</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/09-spring-5.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/10-chain.html">Chaining Multiple Springs</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/10-chain.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/11-chain-array.html">Chaining Many Springs</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/11-chain-array.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/12-multi-spring.html">Springing to Multiple Targets</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/12-multi-spring.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/13-offset-spring.html">Offset the Spring Target</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/13-offset-spring.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/14-double-spring.html">Two Objects Connected by a Spring</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/14-double-spring.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch08/15-triple-spring.html">Three Objects Connected by a Spring</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch08/15-triple-spring.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 9: Collision Detection</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch09/01-object-hit-test.html">Hit Testing With the Bounding Box of an Object</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch09/01-object-hit-test.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch09/02-boxes.html">Stacking Boxes</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch09/02-boxes.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch09/03-point-hit-test.html">Hit Testing a Point and a Bounding Box</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch09/03-point-hit-test.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch09/04-distance-1.html">Distance-based Collision Detection</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch09/04-distance-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch09/05-distance-2.html">Distance-based Collision Detection With Arbitrary Size</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch09/05-distance-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch09/06-bubbles-1.html">Collision-based Springing</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch09/06-bubbles-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch09/07-bubbles-2.html">Multiple Object Collision Detection and Springing</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch09/07-bubbles-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch09/08-bubbles-3.html">Optimized Multiple Object Collision Detection and Springing</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch09/08-bubbles-3.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 10: Coordinate Rotation and Bouncing Off Angles</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch10/01-rotate-1.html">Using Simple Coordinate Rotation to Rotate Around Point</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/01-rotate-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch10/02-rotate-2.html">Rotating Around a Point Using Advanced Coordinate Rotation</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/02-rotate-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch10/03-rotate-3.html">Rotating Multiple Objects</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/03-rotate-3.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch10/04-angle-bounce.html">Bouncing Off an Angle</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/04-angle-bounce.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch10/05-angle-bounce-opt.html">Optimized Bouncing Off an Angle</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/05-angle-bounce-opt.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch10/06-angle-bounce-rotate.html">Bouncing Off a Dynamic Angle</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/06-angle-bounce-rotate.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch10/07-angle-bounce-hit-test.html">Bouncing Off Angle and Hit Test Object</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/07-angle-bounce-hit-test.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch10/08-angle-bounce-bounds.html">Bouncing Off Angle and Check Bounding Box</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/08-angle-bounce-bounds.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch10/09-angle-bounce-final.html">Bouncing Off Angle and Walls</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/09-angle-bounce-final.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch10/10-multi-angle-bounce.html">Bouncing Off Multiple Angles</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch10/10-multi-angle-bounce.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 11: Billiard Ball Physics</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch11/01-billiard-1.html">Conservation of Momentum on One Axis</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch11/01-billiard-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch11/02-billiard-2.html">Optimized Conservation of Momentum on One Axis</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch11/02-billiard-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch11/03-billiard-3.html">Conservation of Momentum on Two Axes</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch11/03-billiard-3.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch11/04-billiard-4.html">Optimized Conservation of Momentum on Two Axes</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch11/04-billiard-4.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch11/05-multi-billiard-1.html">Multiple Object Collisions</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch11/05-multi-billiard-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch11/06-multi-billiard-2.html">Multiple Object Collisions With Problem Fixed</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch11/06-multi-billiard-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 12: Particle Attraction and Gravity</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch12/01-gravity.html">Gravitational Force Between Particles</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch12/01-gravity.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch12/02-gravity-bounce.html">Gravitational Force and Collision Detection</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch12/02-gravity-bounce.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch12/03-gravity-random.html">Gravitational Force and Collision Detection With Random Sizes</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch12/03-gravity-random.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch12/04-orbit.html">Object in Orbit</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch12/04-orbit.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch12/05-orbit-draw.html">Drawing Along the Orbital Path</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch12/05-orbit-draw.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch12/06-node-garden.html">Connecting Particles With Springs</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch12/06-node-garden.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch12/07-node-garden-lines.html">Drawing Lines Between Connected Particles</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch12/07-node-garden-lines.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch12/08-node-garden-mass.html">Applying Mass to Connected Particles</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch12/08-node-garden-mass.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 13: Forward Kinematics: Making Things Walk</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch13/01-segment.html">Segment Class Demo</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/01-segment.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch13/02-single-segment.html">Single Segment and Slider</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/02-single-segment.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch13/03-two-segments-1.html">Moving Two Segments 1</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/03-two-segments-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch13/04-two-segments-2.html">Moving Two Segments 2</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/04-two-segments-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch13/05-walking-1.html">Automate Walk</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/05-walking-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch13/06-walking-2.html">Natural Walk</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/06-walking-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch13/07-walking-3.html">Natural Walk with Two Legs</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/07-walking-3.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch13/08-walking-4.html">Natural Walk with Two Visible Legs</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/08-walking-4.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch13/09-walking-5.html">Dynamic Walk Controls</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/09-walking-5.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch13/10-real-walk.html">Real Walk on the Ground</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch13/10-real-walk.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 14: Inverse Kinematics: Dragging and Reaching</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch14/01-one-segment.html">Reaching with a Single Segment</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch14/01-one-segment.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch14/02-one-segment-drag.html">Dragging a Single Segment</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch14/02-one-segment-drag.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch14/03-two-segment-drag.html">Dragging Two Segments</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch14/03-two-segment-drag.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch14/04-multi-segment-drag.html">Dragging Many Segments</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch14/04-multi-segment-drag.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch14/05-two-segment-reach.html">Reaching with Two Segments</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch14/05-two-segment-reach.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch14/06-multi-segment-reach.html">Reaching with Many Segments</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch14/06-multi-segment-reach.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch14/07-play-ball.html">Reaching for an Object</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch14/07-play-ball.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch14/08-cosines-1.html">Reaching with the Law of Cosines</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch14/08-cosines-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch14/09-cosines-2.html">Reaching with the Law of Cosines, Reverse</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch14/09-cosines-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+
+        <li>
+          <h2>Part Four: 3D Animation</h2>
+          <ol>
+            <li>
+              <h3>Chapter 15: 3D Basics</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch15/01-perspective-1.html">3D Perspective</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/01-perspective-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/02-perspective-2.html">3D Perspective without Negative Scale</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/02-perspective-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/03-velocity-3d.html">3D Velocity and Acceleration</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/03-velocity-3d.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/04-bounce-3d.html">Single Object 3D Bounce</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/04-bounce-3d.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/05-multi-bounce-3d.html">Multiple Object 3D Bounce</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/05-multi-bounce-3d.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/06-z-sort.html">Multiple Object 3D Bounce with Z-Sorting</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/06-z-sort.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/07-bouncy-balls.html">Bouncy Balls and Gravity</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/07-bouncy-balls.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/08-trees-1.html">Running Through a Forest with Screen-Wrapping</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/08-trees-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/09-trees-2.html">Flying Through a Forest</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/09-trees-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/10-easing-3d.html">3D Easing</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/10-easing-3d.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/11-spring-3d.html">3D Springing</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/11-spring-3d.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/12-rotate-y.html">Coordinate Rotation Around Y-Axis</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/12-rotate-y.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/13-rotate-xy.html">Coordinate Rotation Around X and Y Axes</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/13-rotate-xy.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch15/14-collision-3d.html">3D Collision Detection</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch15/14-collision-3d.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 16: 3D Lines and Fills</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch16/01-lines-3d-1.html">Lines and Balls</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/01-lines-3d-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/02-lines-3d-2.html">Lines and Points</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/02-lines-3d-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/03-square-3d.html">Square</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/03-square-3d.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/04-spinning-e.html">Letter E</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/04-spinning-e.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/05-filled-e.html">Filled Letter E</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/05-filled-e.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/06-triangles.html">Creating Shapes with Triangles</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/06-triangles.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/07-cube.html">Modeling a Cube</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/07-cube.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/08-pyramid.html">Modeling a Pyramid</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/08-pyramid.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/09-extruded-a.html">More Complex Models</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/09-extruded-a.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/10-cylinder.html">Generating a Cylinder Model</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/10-cylinder.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/11-move-cube-1.html">Move Model, Rotate Around Origin</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/11-move-cube-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch16/12-move-cube-2.html">Move Model, Rotate Around Self</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch16/12-move-cube-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 17: Backface Culling and 3D Lighting</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch17/01-extruded-a-cull.html">Backface Culling</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch17/01-extruded-a-cull.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch17/02-extruded-a-depth.html">Enhanced Depth Sorting</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch17/02-extruded-a-depth.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch17/03-extruded-a-light.html">3D Lighting Effect</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch17/03-extruded-a-light.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+
+        <li>
+          <h2>Part Five: Additional Techniques</h2>
+          <ol>
+            <li>
+              <h3>Chapter 18: Matrix Math</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch18/01-rotate-xy.html">Coordinate Rotation Around X and Y Axes</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch18/01-rotate-xy.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch18/02-matrix-rotate.html">Rotate Transformation</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch18/02-matrix-rotate.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch18/03-skew-x.html">Skew X-Axis Transformation</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch18/03-skew-x.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch18/04-skew-xy.html">Skew X and Y Axes Transformation</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch18/04-skew-xy.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+
+            <li>
+              <h3>Chapter 19: Tips and Tricks</h3>
+              <ol>
+                <li>
+                  <a href="./examples/ch19/01-brownian-1.html">Brownian (Random) Motion</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/01-brownian-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/02-brownian-2.html">Brownian Motion with Trails</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/02-brownian-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/03-random-1.html">Square Distribution</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/03-random-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/04-random-2.html">Square Distribution Over Smaller Area</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/04-random-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/05-random-3.html">Circular Distribution</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/05-random-3.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/06-random-4.html">Smoothed Circular Distribution</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/06-random-4.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/07-random-5.html">Biased Distribution</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/07-random-5.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/08-random-6.html">Biased Distribution with Multiple Iterations</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/08-random-6.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/09-random-7.html">Two-Dimensional Biased Distribution</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/09-random-7.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/10-random-8.html">Collision-Based Distribution</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/10-random-8.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/11-timer.html">Timer-Based Animation</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/11-timer.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/12-time-based-1.html">Time-Based Animation</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/12-time-based-1.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/13-time-based-2.html">Time-Based Animation using setInterval</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/13-time-based-2.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/14-time-based-3.html">Time-Based Animation with Gravity</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/14-time-based-3.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/15-same-mass.html">Collisions Between Same-Mass Objects</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/15-same-mass.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+                <li>
+                  <a href="./examples/ch19/16-sound-events.html">Using Sound Effects</a>
+                  <a href="https://github.com/lamberta/html5-animation/blob/master/examples/ch19/16-sound-events.html" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+
+        <li>
+          <h2>Extras</h2>
+          <ol>
+            <li>
+              <a href="./xtras/easing-equations/demo.html">Easing Equations</a>
+              <a href="https://github.com/lamberta/html5-animation/tree/master/xtras/easing-equations" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+            </li>
+            <li>
+              Helper Functions
+              <a href="https://github.com/lamberta/html5-animation/blob/master/examples/include/utils.js" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+            </li>
+            <li>
+              JavaScript Key Codes
+              <a href="https://github.com/lamberta/html5-animation/blob/master/xtras/keycode.js" title="View source code on GitHub" target="_blank"><img src="./examples/include/file_icon.png" alt="[source]"/></a>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+    
+  </body>
+</html>
