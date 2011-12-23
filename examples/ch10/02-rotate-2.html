@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Rotate 2</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          ball = new Ball(),
+          vr = 0.05,
+          cos = Math.cos(vr),
+          sin = Math.sin(vr),
+          centerX = canvas.width / 2,
+          centerY = canvas.height / 2;
+      
+      ball.x = Math.random() * canvas.width;
+      ball.y = Math.random() * canvas.height;
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        var x1 = ball.x - centerX,
+            y1 = ball.y - centerY,
+            x2 = cos * x1 - sin * y1,
+            y2 = cos * y1 + sin * x1;
+        
+        ball.x = centerX + x2;
+        ball.y = centerY + y2;
+        
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

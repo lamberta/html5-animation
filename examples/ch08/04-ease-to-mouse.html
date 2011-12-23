@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ease to Mouse</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Move mouse on canvas element.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          ball = new Ball(),
+          easing = 0.05;
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        var vx = (mouse.x - ball.x) * easing,
+            vy = (mouse.y - ball.y) * easing;
+
+        ball.x += vx;
+        ball.y += vy;
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

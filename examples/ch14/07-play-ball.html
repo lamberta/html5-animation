@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Play Ball</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script src="./classes/segment.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          ball = new Ball(20),
+          segments = [],
+          numSegments = 5,
+          gravity = 0.5,
+          bounce = -0.9,
+          target;
+
+      ball.vx = 10;
+
+      while (numSegments--) {
+        segments.push(new Segment(20, 10));
+      }
+      
+      //center the last one
+      segments[segments.length - 1].x = canvas.width / 2;
+      segments[segments.length - 1].y = canvas.height / 2;
+
+      function moveBall () {
+        ball.vy += gravity;
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        if (ball.x + ball.radius > canvas.width) {
+          ball.x = canvas.width - ball.radius;
+          ball.vx *= bounce;
+        } else if (ball.x - ball.radius < 0) {
+          ball.x = ball.radius;
+          ball.vx *= bounce;
+        }
+        if (ball.y + ball.radius > canvas.height) {
+          ball.y = canvas.height - ball.radius;
+          ball.vy *= bounce;
+        } else if (ball.y - ball.radius < 0) {
+          ball.y = ball.radius;
+          ball.vy *= bounce;
+        }
+      }
+
+      function reach (segment, xpos, ypos) {
+        var dx = xpos - segment.x,
+            dy = ypos - segment.y;
+        segment.rotation = Math.atan2(dy, dx);
+        var w = segment.getPin().x - segment.x,
+            h = segment.getPin().y - segment.y;
+        return {
+          x: xpos - w,
+          y: ypos - h
+        };
+      }
+
+      function position (segmentA, segmentB) {
+        segmentA.x = segmentB.getPin().x;
+        segmentA.y = segmentB.getPin().y;
+      }
+
+      function checkHit () {
+        var segment = segments[0],
+            dx = segment.getPin().x - ball.x,
+            dy = segment.getPin().y - ball.y,
+            dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < ball.radius) {
+          ball.vx += Math.random() * 2 - 1;
+          ball.vy -= 1;
+        }
+      }
+
+      function move (segment, i) {
+        if (i !== 0) {
+          target = reach(segment, target.x, target.y);
+          position(segments[i - 1], segment);
+        }
+      }
+
+      function draw (segment) {
+        segment.draw(context);
+      }
+      
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        moveBall();
+        target = reach(segments[0], ball.x, ball.y);
+        segments.forEach(move);
+        checkHit();
+        
+        segments.forEach(draw);
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

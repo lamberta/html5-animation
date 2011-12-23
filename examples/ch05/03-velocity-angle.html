@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Velocity Angle</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          ball = new Ball(),
+          angle = 45,
+          speed = 1;
+
+      ball.x = 50;
+      ball.y = 100;
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        var radians = angle * Math.PI / 180,
+            vx = Math.cos(radians) * speed,
+            vy = Math.sin(radians) * speed;
+
+        ball.x += vx;
+        ball.y += vy;
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Multi Spring</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Press and drag blue handles with mouse.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          ball = new Ball(20),
+          handles = [],
+          numHandles = 3,
+          spring = 0.03,
+          friction = 0.9,
+          movingHandle = null;
+
+      for (var handle, i = 0; i < numHandles; i++) {
+        handle = new Ball(10, "#0000ff");
+        handle.x = Math.random() * canvas.width;
+        handle.y = Math.random() * canvas.height;
+        handles.push(handle);
+      }
+
+      canvas.addEventListener('mousedown', function () {
+        handles.forEach(function (handle) {
+          if (utils.containsPoint(handle.getBounds(), mouse.x, mouse.y)) {
+            movingHandle = handle;
+          }
+        });
+      }, false);
+
+      canvas.addEventListener('mouseup', function () {
+        if (movingHandle) {
+          movingHandle = null;
+        }
+      }, false);
+
+      canvas.addEventListener('mousemove', function () {
+        if (movingHandle) {
+          movingHandle.x = mouse.x;
+          movingHandle.y = mouse.y;
+        }
+      }, false);
+
+      function applyHandle (handle) {
+        var dx = handle.x - ball.x,
+            dy = handle.y - ball.y;
+        ball.vx += dx * spring;
+        ball.vy += dy * spring;
+      }
+
+      function drawHandle (handle) {
+        context.moveTo(ball.x, ball.y);
+        context.lineTo(handle.x, handle.y);
+        context.stroke();
+        handle.draw(context);
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        handles.forEach(applyHandle);
+        ball.vx *= friction;
+        ball.vy *= friction;
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        context.beginPath();
+        handles.forEach(drawHandle);
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

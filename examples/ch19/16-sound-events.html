@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sound Events</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+
+    <canvas id="canvas" width="400" height="400">
+      <p>Your browser does not support the <code>canvas</code> element.</p>
+    </canvas>
+
+    <audio id="sound">
+      <source src="./assets/boing.ogg" />
+      <source src="./assets/boing.mp3" />
+      <p>This browser does not support the <code>audio</code> element.</p>
+    </audio>
+    
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          sound = document.getElementById('sound'),
+          ball = new Ball(),
+          vx = Math.random() * 10 - 5,
+          vy = Math.random() * 10 - 5,
+          bounce = -0.7;
+
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height / 2;
+
+      /* Only start the animation if the audio element is supported.
+       */
+      if (typeof sound !== 'object' || !sound.canPlayType) {
+        throw new Error("The audio element is not supported in this browser.");
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        var left = 0,
+            right = canvas.width,
+            top = 0,
+            bottom = canvas.height;
+
+        ball.x += vx;
+        ball.y += vy;
+
+        if (ball.x + ball.radius > right) {
+          sound.play();
+          ball.x = right - ball.radius;
+          vx *= bounce;
+        } else if (ball.x - ball.radius < left) {
+          sound.play();
+          ball.x = left + ball.radius;
+          vx *= bounce;
+        }
+        if (ball.y + ball.radius > bottom) {
+          sound.play();
+          ball.y = bottom - ball.radius;
+          vy *= bounce;
+        } else if (ball.y - ball.radius < top) {
+          sound.play();
+          ball.y = top + ball.radius;
+          vy *= bounce;
+        }
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

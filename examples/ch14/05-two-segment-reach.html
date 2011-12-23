@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Two Segment Reach</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Move mouse on canvas element.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/segment.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          segment0 = new Segment(100, 20),
+          segment1 = new Segment(100, 20);
+
+      segment1.x = canvas.width / 2;
+      segment1.y = canvas.height / 2;
+      
+      function reach (segment, xpos, ypos) {
+        var dx = xpos - segment.x,
+            dy = ypos - segment.y;
+        segment.rotation = Math.atan2(dy, dx);
+        var w = segment.getPin().x - segment.x,
+            h = segment.getPin().y - segment.y;
+        return {
+          x: xpos - w,
+          y: ypos - h
+        };
+      }
+
+      function position (segmentA, segmentB) {
+        segmentA.x = segmentB.getPin().x;
+        segmentA.y = segmentB.getPin().y;
+      }
+      
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        var target = reach(segment0, mouse.x, mouse.y);
+        reach(segment1, target.x, target.y);
+        position(segment0, segment1);
+        
+        segment0.draw(context);
+        segment1.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

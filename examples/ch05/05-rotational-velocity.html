@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Rotational Velocity</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/arrow.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          arrow = new Arrow(),
+          vr = 2; //degrees
+
+      arrow.x = canvas.width / 2;
+      arrow.y = canvas.height / 2;
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        arrow.rotation += vr  * Math.PI / 180; //to radians
+        arrow.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

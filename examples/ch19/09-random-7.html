@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Random 7</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Refresh page for random positions.</aside>
+
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          numDots = 300,
+          iterations = 6;
+
+      while (numDots--) {
+        for (var i = 0, xpos = 0; i < iterations; i++) {
+          xpos += Math.random() * canvas.width;
+        }
+        for (var j = 0, ypos = 0; j < iterations; j++) {
+          ypos += Math.random() * canvas.height;
+        }
+        
+        var x = xpos / iterations,
+            y = ypos / iterations;
+        
+        context.fillStyle = "#000000";
+        context.beginPath();
+        //x, y, radius, start_angle, end_angle, anti-clockwise
+        context.arc(x, y, 2, 0, (Math.PI * 2), true);
+        context.closePath();
+        context.fill();
+      }
+    };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Spray Paint</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Click and draw with the mouse.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          imagedata = context.getImageData(0, 0, canvas.width, canvas.height),
+          pixels = imagedata.data,
+          brush_size = 25,
+          brush_density = 50,
+          brush_color;
+
+      canvas.addEventListener('mousedown', function () {
+        brush_color = utils.parseColor(Math.random() * 0xffffff, true); //to number
+        canvas.addEventListener('mousemove', onMouseMove, false);
+      }, false);
+
+      canvas.addEventListener('mouseup', function () {
+        canvas.removeEventListener('mousemove', onMouseMove, false);
+      }, false);
+
+      function onMouseMove () {
+        //loop over each brush bristle
+        for (var i = 0; i < brush_density; i++) {
+          var angle = Math.random() * Math.PI * 2,
+              radius = Math.random() * brush_size,
+              xpos = (mouse.x + Math.cos(angle) * radius) | 0,
+              ypos = (mouse.y + Math.sin(angle) * radius) | 0,
+              offset = (xpos + ypos * imagedata.width) * 4; //array index of canvas coordinate
+
+          //set the color of a pixel using its component colors: r,g,b,a (0-255)
+          pixels[offset]     = brush_color >> 16 & 0xff; //red
+          pixels[offset + 1] = brush_color >> 8 & 0xff;  //green
+          pixels[offset + 2] = brush_color & 0xff;       //blue
+          pixels[offset + 3] = 255;                      //alpha
+        }
+
+        context.putImageData(imagedata, 0, 0);
+      }
+    };
+    </script>
+  </body>
+</html>

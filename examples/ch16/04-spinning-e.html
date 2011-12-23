@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Spinning E</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Move mouse on canvas element.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/point3d.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          points = [],
+          fl = 250,
+          vpX = canvas.width / 2,
+          vpY = canvas.height / 2,
+          angleX, angleY;
+
+      //the letter 'E', using 12 points
+      points[0]  = new Point3d(-150, -250, 100);
+      points[1]  = new Point3d( 150, -250, 100);
+      points[2]  = new Point3d( 150, -150, 100);
+      points[3]  = new Point3d( -50, -150, 100);
+      points[4]  = new Point3d( -50,  -50, 100);
+      points[5]  = new Point3d(  50,  -50, 100);
+      points[6]  = new Point3d(  50,   50, 100);
+      points[7]  = new Point3d( -50,   50, 100);
+      points[8]  = new Point3d( -50,  150, 100);
+      points[9]  = new Point3d( 150,  150, 100);
+      points[10] = new Point3d( 150,  250, 100);
+      points[11] = new Point3d(-150,  250, 100);
+      
+      points.forEach(function (point) {
+        point.setVanishingPoint(vpX, vpY);
+        point.setCenter(0, 0, 200);
+      });
+
+      function move (point) {
+        point.rotateX(angleX);
+        point.rotateY(angleY);
+      }
+
+      function draw (point, i) {
+        if (i !== 0) {
+          context.lineTo(point.getScreenX(), point.getScreenY());
+        }
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        angleX = (mouse.y - vpY) * 0.0005;
+        angleY = (mouse.x - vpX) * 0.0005;
+        points.forEach(move);
+        context.beginPath();
+        context.moveTo(points[0].getScreenX(), points[0].getScreenY());
+        points.forEach(draw);
+        context.closePath();
+        context.stroke();
+      }());
+    };
+    </script>
+  </body>
+</html>

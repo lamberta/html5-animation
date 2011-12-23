@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Billiard 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          ball0 = new Ball(),
+          ball1 = new Ball();
+
+      ball0.mass = 2;
+      ball0.x = 50;
+      ball0.y = canvas.height / 2;
+      ball0.vx = 1;
+      
+      ball1.mass = 1;
+      ball1.x = 300;
+      ball1.y = canvas.height / 2;
+      ball1.vx = -1;
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ball0.x += ball0.vx;
+        ball1.x += ball1.vx;
+        var dist = ball1.x - ball0.x;
+        if (Math.abs(dist) < ball0.radius + ball1.radius) {     
+          var vx0Final = ((ball0.mass - ball1.mass) * ball0.vx + 2 * ball1.mass * ball1.vx) /
+                         (ball0.mass + ball1.mass),
+              vx1Final = ((ball1.mass - ball0.mass) * ball1.vx + 2 * ball0.mass * ball0.vx) /
+                         (ball0.mass + ball1.mass);
+          ball0.vx = vx0Final;
+          ball1.vx = vx1Final;
+          ball0.x += ball0.vx;
+          ball1.y += ball1.vx;
+        }
+        ball0.draw(context);
+        ball1.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

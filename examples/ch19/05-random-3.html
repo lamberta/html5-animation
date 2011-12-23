@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Random 3</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Refresh page for random positions.</aside>
+
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          numDots = 300,
+          maxRadius = 50;
+
+      while (numDots--) {
+        var radius = Math.random() * maxRadius,
+            angle = Math.random() * (Math.PI * 2),
+            x = canvas.width / 2 + Math.cos(angle) * radius,
+            y = canvas.height / 2 + Math.sin(angle) * radius;
+
+        context.fillStyle = "#000000";
+        context.beginPath();
+        //x, y, radius, start_angle, end_angle, anti-clockwise
+        context.arc(x, y, 2, 0, (Math.PI * 2), true);
+        context.closePath();
+        context.fill();
+      }
+    };
+    </script>
+  </body>
+</html>

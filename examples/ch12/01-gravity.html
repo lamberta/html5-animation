@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gravity</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          particles = [],
+          numParticles = 30;
+
+      for (var particle, i = 0; i < numParticles; i++) {
+        particle = new Ball(5);
+        particle.x = Math.random() * canvas.width;
+        particle.y = Math.random() * canvas.height;
+        particle.mass = 1;
+        particles.push(particle);
+      }
+      
+      function gravitate (partA, partB) {
+        var dx = partB.x - partA.x,
+            dy = partB.y - partA.y,
+            distSQ = dx * dx + dy * dy,
+            dist = Math.sqrt(distSQ),
+            force = partA.mass * partB.mass / distSQ,
+            ax = force * dx / dist,
+            ay = force * dy / dist;
+        partA.vx += ax / partA.mass;
+        partA.vy += ay / partA.mass;
+        partB.vx -= ax / partB.mass;
+        partB.vy -= ay / partB.mass;
+      }
+
+      function move (partA, i) {
+        partA.x += partA.vx;
+        partA.y += partA.vy;
+        for (var partB, j = i + 1; j < numParticles; j++) {
+          partB = particles[j];
+          gravitate(partA, partB);
+        }
+      }
+
+      function draw (particle) {
+        particle.draw(context);
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(move);
+        particles.forEach(draw);
+      }());
+    };
+    </script>
+  </body>
+</html>

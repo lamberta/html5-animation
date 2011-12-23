@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bouncy Balls</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style>
+    #canvas {
+      background-color: #000000;
+    }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball3d.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          balls = [],
+          numBalls = 150,
+          fl = 250,
+          vpX = canvas.width / 2,
+          vpY = canvas.height / 2,
+          gravity = 0.2,
+          floor = 200,
+          bounce = -0.6;
+
+      for (var ball, i = 0; i < numBalls; i++) {
+        ball = new Ball3d(3, Math.random() * 0xffffff);
+        ball.ypos = -100;
+        ball.vx = Math.random() * 6 - 3;
+        ball.vy = Math.random() * 6 - 3;
+        ball.vz = Math.random() * 6 - 3;
+        balls.push(ball);
+      }
+
+      function move (ball) {
+        ball.vy += gravity;
+        ball.xpos += ball.vx;
+        ball.ypos += ball.vy;
+        ball.zpos += ball.vz;
+        
+        if (ball.ypos > floor) {
+          ball.ypos = floor;
+          ball.vy *= bounce;
+        }
+        if (ball.zpos > -fl) {
+          var scale = fl / (fl + ball.zpos);
+          ball.scaleX = ball.scaleY = scale;
+          ball.x = vpX + ball.xpos * scale;
+          ball.y = vpY + ball.ypos * scale;
+          ball.visible = true;
+        } else {
+          ball.visible = false;
+        }
+      }
+
+      function zSort (a, b) {
+        return (b.zpos - a.zpos);
+      }
+      
+      function draw (ball) {
+        if (ball.visible) {
+          ball.draw(context);
+        }
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        balls.forEach(move);
+        balls.sort(zSort);
+        balls.forEach(draw);
+      }());
+    };
+    </script>
+  </body>
+</html>

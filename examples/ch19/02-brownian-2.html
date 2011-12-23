@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Brownian 2</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          dots = [],
+          numDots = 20,
+          friction = 0.95,
+          decay = 0.01,
+          decayColor = utils.colorToRGB("#ffffff", decay); //'rgba(255,255,255,0.01)'
+
+      for (var dot, i = 0; i < numDots; i++) {
+        dot = new Ball(1, "#000000");
+        dot.x = Math.random() * canvas.width;
+        dot.y = Math.random() * canvas.height;
+        dot.vx = 0;
+        dot.vy = 0;
+        dots.push(dot);
+      }
+
+      function draw (dot) {
+        dot.vx += Math.random() * 0.2 - 0.1;
+        dot.vy += Math.random() * 0.2 - 0.1;
+        dot.x += dot.vx;
+        dot.y += dot.vy;
+        dot.vx *= friction;
+        dot.vy *= friction;
+        
+        if (dot.x > canvas.width) {
+          dot.x = 0;
+        } else if (dot.x < 0) {
+          dot.x = canvas.width;
+        }
+        if (dot.y > canvas.height) {
+          dot.y = 0;
+        } else if (dot.y < 0) {
+          dot.y = canvas.height;
+        }
+        dot.draw(context);
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        
+        context.fillStyle = decayColor;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        dots.forEach(draw);
+      }());
+    };
+    </script>
+  </body>
+</html>

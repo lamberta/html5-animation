@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ship Sim Friction</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style>
+      #canvas {
+        background-color: #000000;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Press left and right arrow keys to rotate ship, up to add thrust.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ship.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          ship = new Ship(),
+          vr = 0,
+          vx = 0,
+          vy = 0,
+          thrust = 0,
+          friction = 0.97;
+
+      ship.x = canvas.width / 2;
+      ship.y = canvas.height / 2;
+
+      window.addEventListener('keydown', function (event) {
+        switch (event.keyCode) {
+        case 37:      //left
+          vr = -3;
+          break;
+        case 39:      //right
+          vr = 3;
+          break;
+        case 38:      //up
+          thrust = 0.05;
+          ship.showFlame = true;
+          break;
+        }
+      }, false);
+
+      window.addEventListener('keyup', function () {
+        vr = 0;
+        thrust = 0;
+        ship.showFlame = false;
+      }, false);
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        ship.rotation += vr * Math.PI / 180;
+        var angle = ship.rotation,
+            ax = Math.cos(angle) * thrust,
+            ay = Math.sin(angle) * thrust,
+            left = 0,
+            right = canvas.width,
+            top = 0,
+            bottom = canvas.height;
+
+        vx += ax;
+        vy += ay;
+        vx *= friction;
+        vy *= friction;
+        ship.x += vx;
+        ship.y += vy;
+
+        //screen wrapping
+        if (ship.x - ship.width / 2 > right) {
+          ship.x = left - ship.width / 2;
+        } else if (ship.x + ship.width / 2 < left) {
+          ship.x = right + ship.width / 2;
+        }
+        if (ship.y - ship.height / 2 > bottom) {
+          ship.y = top - ship.height / 2;
+        } else if (ship.y < top - ship.height / 2) {
+          ship.y = bottom + ship.height / 2;
+        }
+        ship.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Distance 2</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <textarea id="log"></textarea>
+    <aside>Drag circle with mouse.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          log = document.getElementById('log'),
+          ballA = new Ball(Math.random() * 100),
+          ballB = new Ball(Math.random() * 100);
+
+      ballA.x = canvas.width / 2;
+      ballA.y = canvas.height / 2;
+
+      canvas.addEventListener('mousemove', drawFrame, false);
+      drawFrame();
+
+      function drawFrame () {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        ballB.x = mouse.x;
+        ballB.y = mouse.y;
+
+        var dx = ballB.x - ballA.x,
+            dy = ballB.y - ballA.y,
+            dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < ballA.radius + ballB.radius) {
+          log.value = "Hit!";
+        } else {
+          log.value = '';
+        }
+        ballA.draw(context);
+        ballB.draw(context);
+      }
+    };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Gradient Fill Radial</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          c1 = {x: 150, y: 150, radius: 0},  //gradient start circle
+          c2 = {x: 150, y: 150, radius: 50}, //gradient end circle
+          gradient = context.createRadialGradient(c1.x, c1.y, c1.radius,
+                                                    c2.x, c2.y, c2.radius);
+      //all black alpha blend
+      gradient.addColorStop(0, "#000000");
+      gradient.addColorStop(1, "rgba(0, 0, 0, 0)"); //alpha required
+
+      context.fillStyle = gradient;
+      context.fillRect(100, 100, 100, 100);
+    };
+    </script>
+  </body>
+</html>

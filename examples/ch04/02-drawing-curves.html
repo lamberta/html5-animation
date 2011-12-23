@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Drawing Curves</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Move mouse on canvas element.</aside>
+    
+    <script src="../include/utils.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          x0 = 100,
+          y0 = 200,
+          x2 = 300,
+          y2 = 200;
+        
+      canvas.addEventListener('mousemove', function () {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        var x1 = mouse.x,
+            y1 = mouse.y;
+
+        //curve toward mouse
+        context.beginPath();
+        context.moveTo(x0, y0);
+        context.quadraticCurveTo(x1, y1, x2, y2);
+        context.stroke();
+      }, false);
+    };
+    </script>
+  </body>
+</html>

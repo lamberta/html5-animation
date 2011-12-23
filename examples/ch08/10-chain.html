@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Chain</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Move mouse on canvas element.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          ball0 = new Ball(),
+          ball1 = new Ball(),
+          ball2 = new Ball(),
+          spring = 0.03,
+          friction = 0.9,
+          gravity = 2;
+
+      function move (ball, targetX, targetY) {
+        ball.vx += (targetX - ball.x) * spring;
+        ball.vy += (targetY - ball.y) * spring;
+        ball.vy += gravity;
+        ball.vx *= friction;
+        ball.vy *= friction;
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        move(ball0, mouse.x, mouse.y);
+        move(ball1, ball0.x, ball0.y);
+        move(ball2, ball1.x, ball1.y);
+
+        //draw spring
+        context.beginPath();
+        context.moveTo(mouse.x, mouse.y);
+        context.lineTo(ball0.x, ball0.y);
+        context.lineTo(ball1.x, ball1.y);
+        context.lineTo(ball2.x, ball2.y);
+        context.stroke();
+
+        //draw balls
+        ball0.draw(context);
+        ball1.draw(context);
+        ball2.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

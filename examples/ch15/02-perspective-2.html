@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Perspective 2</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Mouse moves circle on x and y axis, up/down key along the z-axis.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          ball = new Ball(),
+          xpos = 0,
+          ypos = 0,
+          zpos = 0,
+          fl = 250,
+          vpX = canvas.width / 2,
+          vpY = canvas.height / 2;
+
+      window.addEventListener('keydown', function (event) {
+        if (event.keyCode === 38) {         //up
+          zpos += 5;
+        } else if (event.keyCode === 40) {  //down
+          zpos -= 5;
+        }
+      }, false);
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        if (zpos > -fl) {
+          var scale = fl / (fl + zpos);
+          xpos = mouse.x - vpX;
+          ypos = mouse.y - vpY;
+          ball.scaleX = ball.scaleY = scale;
+          ball.x = vpX + xpos * scale;
+          ball.y = vpY + ypos * scale;
+          ball.visible = true;
+        } else {
+          ball.visible = false;
+        }
+        if (ball.visible) {
+          ball.draw(context);
+        }
+      }());
+    };
+    </script>
+  </body>
+</html>

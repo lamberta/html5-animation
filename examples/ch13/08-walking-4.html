@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Walking 4</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/segment.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          segment0 = new Segment(100, 30),
+          segment1 = new Segment(100, 20),
+          segment2 = new Segment(100, 30),
+          segment3 = new Segment(100, 20),
+          cycle = 0,
+          offset = -Math.PI / 2; //should be between PI and -PI
+      
+      segment0.x = 200;
+      segment0.y = 200;
+      
+      segment1.x = segment0.getPin().x;
+      segment1.y = segment0.getPin().y;
+
+      segment2.x = 200;
+      segment2.y = 200;
+      
+      segment3.x = segment2.getPin().x;
+      segment3.y = segment2.getPin().y;
+
+      function walk (segA, segB, cyc) {
+        var angle0 = (Math.sin(cyc) * 45 + 90) * Math.PI / 180,
+            angle1 = (Math.sin(cyc + offset) * 45 + 45) * Math.PI / 180;
+
+        segA.rotation = angle0;
+        segB.rotation = segA.rotation + angle1;
+        segB.x = segA.getPin().x;
+        segB.y = segA.getPin().y;
+      }                                                     
+      
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        cycle += 0.02;
+        walk(segment0, segment1, cycle);
+        walk(segment2, segment3, cycle + Math.PI);
+        segment0.draw(context);
+        segment1.draw(context);
+        segment2.draw(context);
+        segment3.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

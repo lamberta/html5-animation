@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Rotate 3</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Move mouse left or right on canvas element.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          balls = [],
+          numBalls = 10,
+          vr = 0.05,
+          centerX = canvas.width / 2,
+          centerY = canvas.height / 2,
+          cos, sin; //accessible by move and drawFrame
+
+      for (var ball, i = 0; i < numBalls; i++) {
+        ball = new Ball();
+        ball.x = Math.random() * canvas.width;
+        ball.y = Math.random() * canvas.height;
+        balls.push(ball);
+      }
+
+      function move (ball) {
+        var x1 = ball.x - centerX,
+            y1 = ball.y - centerY,
+            x2 = cos * x1 - sin * y1,
+            y2 = cos * y1 + sin * x1;
+        ball.x = centerX + x2;
+        ball.y = centerY + y2;
+      }
+      
+      function draw (ball) {
+        ball.draw(context);
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        var angle = (mouse.x - centerX) * 0.0005;
+        cos = Math.cos(angle);
+        sin = Math.sin(angle);
+        balls.forEach(move);
+        balls.forEach(draw);
+      }());
+    };
+    </script>
+  </body>
+</html>

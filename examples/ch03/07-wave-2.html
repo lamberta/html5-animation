@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wave 2</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>  
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script src="../include/utils.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          angle = 0,
+          range = 50,
+          centerY = canvas.height / 2,
+          xspeed = 1,
+          yspeed = 0.05,
+          xpos = 0,
+          ypos = centerY;
+
+      context.lineWidth = 2;
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        
+        context.beginPath();
+        context.moveTo(xpos, ypos);
+        //Calculate the new position.
+        xpos += xspeed;
+        angle += yspeed;
+        ypos = centerY + Math.sin(angle) * range;
+        context.lineTo(xpos, ypos);
+        context.stroke();
+      }());
+    };
+    </script>
+  </body>
+</html>

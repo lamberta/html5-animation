@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Multi Curve 2</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Refresh page for random curves.</aside>
+    
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          points = [],
+          numPoints = 9,
+          ctrlPoint = {};
+
+      for (var i = 0; i < numPoints; i++) {
+        points.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height
+        });
+      }
+
+      //move to the first point
+      context.beginPath();
+      context.moveTo(points[0].x, points[1].y);
+      //curve through the rest, stopping at each midpoint
+      for (i = 1; i < numPoints - 2; i++) {
+        ctrlPoint.x = (points[i].x + points[i+1].x) / 2;
+        ctrlPoint.y = (points[i].y + points[i+1].y) / 2;
+        context.quadraticCurveTo(points[i].x, points[i].y,
+                                 ctrlPoint.x, ctrlPoint.y);
+      }
+      //curve through the last two points
+      context.quadraticCurveTo(points[i].x, points[i].y,
+                               points[i+1].x, points[i+1].y);
+      context.stroke();
+    };
+    </script>
+  </body>
+</html>

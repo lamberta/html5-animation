@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Spring 3D</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Click canvas element to set random target.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball3d.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          ball = new Ball3d(),
+          tx = Math.random() * 500 - 250,
+          ty = Math.random() * 500 - 250,
+          tz = Math.random() * 500,
+          spring = 0.1,
+          friction = 0.94,
+          fl = 250,
+          vpX = canvas.width / 2,
+          vpY = canvas.height / 2;
+
+      window.addEventListener('mousedown', function () {
+        tx = Math.random() * 500 - 250;
+        ty = Math.random() * 500 - 250;
+        tz = Math.random() * 500;
+      }, false);
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        
+        var dx = tx - ball.xpos,
+            dy = ty - ball.ypos,
+            dz = tz - ball.zpos;
+        
+        ball.vx += dx * spring;
+        ball.vy += dy * spring;
+        ball.vz += dz * spring;
+        ball.xpos += ball.vx;
+        ball.ypos += ball.vy;
+        ball.zpos += ball.vz;
+        ball.vx *= friction;
+        ball.vy *= friction;
+        ball.vz *= friction;
+        
+        if (ball.zpos > -fl) {
+          var scale = fl / (fl + ball.zpos);
+          ball.scaleX = ball.scaleY = scale;
+          ball.x = vpX + ball.xpos * scale;
+          ball.y = vpY + ball.ypos * scale;
+          ball.visible = true;
+        } else {
+          ball.visible = false;
+        }
+        if (ball.visible) {
+          ball.draw(context);
+        }
+      }());
+    };
+    </script>
+  </body>
+</html>

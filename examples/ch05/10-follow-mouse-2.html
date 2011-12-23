@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Follow Mouse 2</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Move mouse on canvas element.</aside>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/arrow.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          arrow = new Arrow(),
+          vx = 0,
+          vy = 0,
+          force = 0.05;
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        var dx = mouse.x - arrow.x,
+            dy = mouse.y - arrow.y,
+            angle = Math.atan2(dy, dx),
+            ax = Math.cos(angle) * force,
+            ay = Math.sin(angle) * force;
+
+        arrow.rotation = angle;
+        vx += ax;
+        vy += ay;
+        arrow.x += vx;
+        arrow.y += vy;
+        arrow.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

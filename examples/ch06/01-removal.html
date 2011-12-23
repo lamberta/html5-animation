@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Removal</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <textarea id="log"></textarea>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          log = document.getElementById('log'),
+          balls = [],
+          numBalls = 10;
+
+      for (var ball, i = 0; i < numBalls; i++) {
+        ball = new Ball(20);
+        ball.id = "ball" + i;
+        ball.x  = Math.random() * canvas.width;
+        ball.y  = Math.random() * canvas.height;
+        ball.vx = Math.random() * 2 - 1;
+        ball.vy = Math.random() * 2 - 1;
+        balls.push(ball);
+      }
+
+      function draw (ball, pos) {
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        if (ball.x - ball.radius > canvas.width ||
+            ball.x + ball.radius < 0 ||
+            ball.y - ball.radius > canvas.height ||
+            ball.y + ball.radius < 0) {
+          balls.splice(pos, 1); //remove ball from array
+          if (balls.length > 0) {
+            log.value = "Removed " + ball.id;
+          } else {
+            log.value = "All gone!";
+          }
+        }
+        ball.draw(context);
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        var i = balls.length;
+        while (i--) {
+          draw(balls[i], i);
+        }
+      }());
+    };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Node Garden</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style>
+    #canvas {
+      background-color: #000000;
+    }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          particles = [],
+          numParticles = 30,
+          minDist = 100,
+          springAmount = 0.001;
+
+      for (var particle, i = 0; i < numParticles; i++) {
+        particle = new Ball(5, "#ffffff");
+        particle.x = Math.random() * canvas.width;
+        particle.y = Math.random() * canvas.height;
+        particle.vx = Math.random() * 6 - 3;
+        particle.vy = Math.random() * 6 - 3;
+        particles.push(particle);
+      }
+
+      function spring (partA, partB) {
+        var dx = partB.x - partA.x,
+            dy = partB.y - partA.y,
+            dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < minDist) {
+          var ax = dx * springAmount,
+              ay = dy * springAmount;
+          partA.vx += ax;
+          partA.vy += ay;
+          partB.vx -= ax;
+          partB.vy -= ay;
+        }
+      }
+
+      function move (partA, i) {
+        partA.x += partA.vx;
+        partA.y += partA.vy;
+        if (partA.x > canvas.width) {
+          partA.x = 0;
+        } else if (partA.x < 0) {
+          partA.x = canvas.width;
+        }
+        if (partA.y > canvas.height) {
+          partA.y = 0;
+        } else if (partA.y < 0) {
+          partA.y = canvas.height;
+        }
+        for (var partB, j = i + 1; j < numParticles; j++) {
+          partB = particles[j];
+          spring(partA, partB);
+        }
+      }
+
+      function draw (particle) {
+        particle.draw(context);
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(move);
+        particles.forEach(draw);
+      }());
+    };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bouncing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script src="../include/utils.js"></script>
+    <script src="./classes/ball.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          ball = new Ball(),
+          vx = Math.random() * 10 - 5,
+          vy = Math.random() * 10 - 5;
+
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height / 2;
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        var left = 0,
+            right = canvas.width,
+            top = 0,
+            bottom = canvas.height;
+
+        ball.x += vx;
+        ball.y += vy;
+
+        if (ball.x + ball.radius > right) {
+          ball.x = right - ball.radius;
+          vx *= -1;
+        } else if (ball.x - ball.radius < left) {
+          ball.x = left + ball.radius;
+          vx *= -1;
+        }
+        if (ball.y + ball.radius > bottom) {
+          ball.y = bottom - ball.radius;
+          vy *= -1;
+        } else if (ball.y - ball.radius < top) {
+          ball.y = top + ball.radius;
+          vy *= -1;
+        }
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>
