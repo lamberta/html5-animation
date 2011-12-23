@@ -54,6 +54,10 @@ aside {
   border-radius: 15px;
 }
 
+#index-body #description {
+  margin-top: 40px;
+}
+
 #index-body h1 {
   color: #b30300;
 }
@@ -103,4 +107,12 @@ aside {
 
 #exercises h2 {
   margin: 10px 0 0 0;
+}
+
+#index-body #share-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px;
+  width: 250px;
 }
