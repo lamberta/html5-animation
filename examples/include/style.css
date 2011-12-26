@@ -108,11 +108,3 @@ aside {
 #exercises h2 {
   margin: 10px 0 0 0;
 }
-
-#index-body #share-buttons {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 5px;
-  width: 250px;
-}
