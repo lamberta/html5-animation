@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Motion Path</title>
+    <link rel="stylesheet" href="../../examples/include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400">
+      <p>Your browser does not support the <code>canvas</code> element.</p>
+    </canvas>
+    <aside>Refresh page for random motion path.</aside>
+
+    <script src="../../examples/include/utils.js"></script>
+    <script src="../../examples/ch08/classes/ball.js"></script>
+    <script src="./motionpath.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          ball = new Ball(10),
+          x_path = new MotionPath(),
+          y_path = new MotionPath(),
+          points = [],
+          numPoints = 4,
+          time = 0,
+          change = 0.005;
+
+      //randomly position points
+      for (var point, i = 0; i < numPoints; i++) {
+        point = new Ball(10, "#0000ff");
+        point.x = Math.random() * canvas.width;
+        point.y = Math.random() * canvas.height;
+        points.push(point);
+      }
+
+      //random control points for curves
+      var ctrl_pt0 = {x: Math.random() * canvas.width, y: Math.random() * canvas.height},
+          ctrl_pt1 = {x: Math.random() * canvas.width, y: Math.random() * canvas.height},
+          ctrl_pt2 = {x: Math.random() * canvas.width, y: Math.random() * canvas.height};
+
+      //create two motion paths, one for each dimension
+      x_path.start = points[0].x;
+      x_path.lineTo(points[1].x);
+      x_path.quadraticCurveTo(ctrl_pt0.x, points[2].x);
+      x_path.bezierCurveTo(ctrl_pt1.x, ctrl_pt2.x, points[3].x);
+      x_path.closePath();
+      
+      y_path.start = points[0].y;
+      y_path.lineTo(points[1].y);
+      y_path.quadraticCurveTo(ctrl_pt0.y, points[2].y);
+      y_path.bezierCurveTo(ctrl_pt1.y, ctrl_pt2.y, points[3].y);
+      y_path.closePath();
+      
+      function drawPath (ctx) {
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        ctx.lineTo(points[1].x, points[1].y);
+        ctx.quadraticCurveTo(ctrl_pt0.x, ctrl_pt0.y, points[2].x, points[2].y);
+        ctx.bezierCurveTo(ctrl_pt1.x, ctrl_pt1.y, ctrl_pt2.x, ctrl_pt2.y, points[3].x, points[3].y);
+        ctx.closePath();
+        ctx.stroke();
+      }
+      
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        ball.x = x_path.interpolate(time);
+        ball.y = y_path.interpolate(time);
+
+        time += change;
+        if (time > 1) { time = 0; }
+        
+        drawPath(context);
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>
