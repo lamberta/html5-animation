@@ -29,20 +29,20 @@
           time = 0,
           change = 0.005;
 
-      //randomly position points
-      for (var point, i = 0; i < numPoints; i++) {
-        point = new Ball(10, "#0000ff");
-        point.x = Math.random() * canvas.width;
-        point.y = Math.random() * canvas.height;
-        points.push(point);
+      //randomly position path points
+      for (var i = 0; i < numPoints; i++) {
+        points.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height
+        });
       }
 
-      //random control points for curves
+      //randomly position control points for curves
       var ctrl_pt0 = {x: Math.random() * canvas.width, y: Math.random() * canvas.height},
           ctrl_pt1 = {x: Math.random() * canvas.width, y: Math.random() * canvas.height},
           ctrl_pt2 = {x: Math.random() * canvas.width, y: Math.random() * canvas.height};
 
-      //create two motion paths, one for each dimension
+      //create two motion paths, one for each dimension. see motionpath.js for properties
       x_path.start = points[0].x;
       x_path.lineTo(points[1].x);
       x_path.quadraticCurveTo(ctrl_pt0.x, points[2].x);
@@ -54,7 +54,8 @@
       y_path.quadraticCurveTo(ctrl_pt0.y, points[2].y);
       y_path.bezierCurveTo(ctrl_pt1.y, ctrl_pt2.y, points[3].y);
       y_path.closePath();
-      
+
+      //draw a line that matches our motion path
       function drawPath (ctx) {
         ctx.beginPath();
         ctx.moveTo(points[0].x, points[0].y);
@@ -69,9 +70,11 @@
         window.requestAnimationFrame(drawFrame, canvas);
         context.clearRect(0, 0, canvas.width, canvas.height);
 
+        //calculate position on entire path (0.0 - 1.0)
         ball.x = x_path.interpolate(time);
         ball.y = y_path.interpolate(time);
 
+        //update ratio and loop at end
         time += change;
         if (time > 1) { time = 0; }
         
