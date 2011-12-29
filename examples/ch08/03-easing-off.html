@@ -34,7 +34,10 @@
 
         if (Math.abs(dx) < 1) {
           ball.x = targetX;
-          window.cancelRequestAnimationFrame(animRequest);
+          /* ERRATA: 'cancelRequestAnimationFrame' renamed to 'cancelAnimationFrame' to reflect an update to the W3C Animation-Timing Spec.
+           * See utils.js for the update to check for cross-browser compatibility.
+           */
+          window.cancelAnimationFrame(animRequest);
           log.value = "Animation done!";
         } else {
           var vx = dx * easing;

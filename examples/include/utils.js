@@ -17,19 +17,20 @@ if (!window.requestAnimationFrame) {
 }
 
 /**
+ * ERRATA: 'cancelRequestAnimationFrame' renamed to 'cancelAnimationFrame' to reflect an update to the W3C Animation-Timing Spec.
+ *
  * Cancels an animation frame request.
  * Checks for cross-browser support, falls back to clearTimeout.
  * @param {number}  Animation frame request.
  */
-if (!window.cancelRequestAnimationFrame) {
-  window.cancelRequestAnimationFrame = (window.cancelAnimationFrame ||
-                                        window.webkitCancelRequestAnimationFrame ||
-                                        window.mozCancelRequestAnimationFrame ||
-                                        window.msCancelRequestAnimationFrame ||
-                                        window.oCancelRequestAnimationFrame ||
-                                        window.clearTimeout);
+if (!window.cancelAnimationFrame) {
+  window.cancelAnimationFrame = (window.cancelRequestAnimationFrame ||
+                                 window.webkitCancelAnimationFrame || window.webkitCancelRequestAnimationFrame ||
+                                 window.mozCancelAnimationFrame || window.mozCancelRequestAnimationFrame ||
+                                 window.msCancelAnimationFrame || window.msCancelRequestAnimationFrame ||
+                                 window.oCancelAnimationFrame || window.oCancelRequestAnimationFrame ||
+                                 window.clearTimeout);
 }
-
 
 /* Object that contains our utility functions.
  * Attached to the window object which acts as the global namespace.
