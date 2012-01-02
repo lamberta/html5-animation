@@ -1,11 +1,7 @@
----
-title: Errata Sheet for Foundation HTML5 Animation with JavaScript
----
-
 # Errata Sheet
 
-These are the updates and corrections to *[Foundation HTML5
-Animation with JavaScript](http://lamberta.github.com/html5-animation/)*—If
+These are the updates and corrections to [Foundation HTML5
+Animation with JavaScript](http://lamberta.github.com/html5-animation/)—If
 you find any more, please let me know!
 
 ## p. 111
