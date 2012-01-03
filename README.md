@@ -20,7 +20,12 @@ And if you enjoy the book, please spread the word and write a [review](http://ww
 * Advanced motion techniques like springs, coordinate rotation, conservation of momentum, and forward and inverse kinematics.
 * All the basic 3D concepts you'll need for 3D in HTML5 (without WebGL)—from simple perspective to full 3D solids, complete with backface culling and dynamic lighting.
 
+# Ports
 
-## Disclaimer
+One of the great things about this book is that the concepts apply not just to JavaScript, but to computer animation in general. All you need is support for a drawing surface and a few simple commands, and you can apply these ideas using whatever programming language you want! And if you do, please send me a message and I'll list it here.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+* https://github.com/financeCoding/dart-html5-animation (Mike Coding)
+
+# Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
