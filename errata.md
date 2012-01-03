@@ -1,7 +1,6 @@
 # Errata Sheet
 
-These are the updates and corrections to [Foundation HTML5
-Animation with JavaScript](http://lamberta.github.com/html5-animation/)—If
+Updates and corrections to [Foundation HTML5 Animation with JavaScript](http://lamberta.github.com/html5-animation/)—If
 you find any more, please let me know!
 
 ## p. 111
@@ -35,7 +34,7 @@ what the code looks like after we plug in example values: ...
 In an updated Editor's Draft of the [W3C Animation-Timing](http://www.w3.org/TR/animation-timing/)
 specification, `window.cancelRequestAnimationFrame` has been renamed to `window.cancelAnimationFrame`. (Submitted by Paul Irish)
 
-Excercise [03-easing-off.html](https://github.com/lamberta/html5-animation/blob/master/examples/ch08/03-easing-off.html)
+Exercise [03-easing-off.html](https://github.com/lamberta/html5-animation/blob/master/examples/ch08/03-easing-off.html)
 has been updated to use this name:
 
     window.cancelAnimationFrame(animRequest);
@@ -54,3 +53,20 @@ to reflect its name change:
                                      window.oCancelAnimationFrame || window.oCancelRequestAnimationFrame ||
                                      window.clearTimeout);
     }
+
+## p. 462
+
+Exercise [14-time-based-3.html](https://github.com/lamberta/html5-animation/blob/master/examples/ch19/14-time-based-3.html)
+exhibits a bug when a user switches to a new browser tab,
+then, after a few seconds, switches back to the tab running
+the example. (Submitted by Paul Irish)
+
+The current frame uses the time stored by the previous frame
+to calculate the elapsed time. Since switching browser tabs
+increases this value by many times, the calculation for
+vertical velocity results in excessive motion. One fix is to
+establish a range for the `elapsed` value before applying
+the `gravity` multiplier. The typical framerate is about 17 milliseconds.
+
+    elapsed = Math.min(20, Math.max(-20, elapsed));
+    vy += gravity * elapsed / 1000;

@@ -43,6 +43,10 @@
             bottom = canvas.height;
         
         time = getTimer();
+        /* ERRATA: Set a min/max range for elapsed time before applying gravity. Avoids excessive vertical velocity when switching tabs.
+         * Default framerate is about 17 ms.
+         */
+        elapsed = Math.min(20, Math.max(-20, elapsed));
         vy += gravity * elapsed / 1000;
         ball.x += vx * elapsed / 1000;
         ball.y += vy * elapsed / 1000;
