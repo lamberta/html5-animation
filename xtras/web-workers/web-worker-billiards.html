@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Web Worker Billiards</title>
+    <link rel="stylesheet" href="../../examples/include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Same as <a href="../../examples/ch11/06-multi-billiard-2.html">06-multi-billiard-2.html</a> but the collision detection is run in a <a href="http://www.w3.org/TR/workers/">Web Worker</a> at 30 fps.<br/>
+      Browser security restrictions require Web Workers to adhere to the <a href="https://developer.mozilla.org/en/Same_origin_policy_for_JavaScript">same-origin policy</a>.</aside>
+
+    <script src="../../examples/include/utils.js"></script>
+    <script src="../../examples/ch08/classes/ball.js"></script>
+    <script>
+    /* test browser support for Web Workers
+     */
+    if (typeof Worker !== 'function') {
+      var err = new ReferenceError("Sorry, Web Workers are not supported in your browser."),
+          aside = document.getElementsByTagName('aside')[0];
+      aside.innerHTML = "<p><em>" + err.message + " Check the <a href='http://caniuse.com/webworkers'>browser compatibility table</a>.</em></p>" + aside.innerHTML;
+      throw err;
+    }
+
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          worker = new Worker('./collision-worker.js'),
+          balls = [],
+          numBalls = 15,
+          renderFrame = true;
+
+      //initialize the ball positions as in prior example 
+      for (var radius, ball, i = 0; i < numBalls; i++) {
+        radius = Math.random() * 20 + 15;
+        ball = new Ball(radius, Math.random() * 0xffffff);
+        ball.mass = radius;
+        ball.x = Math.random() * canvas.width;
+        ball.y = Math.random() * canvas.height;
+        ball.vx = Math.random() * 10 - 5;
+        ball.vy = Math.random() * 10 - 5;
+        balls.push(ball);
+      }
+
+      //workers cannot access the DOM so we need to initialize the boundaries
+      worker.postMessage({width: canvas.width, height: canvas.height});
+      //sends a copy of the balls array to the worker, collision detection will operate on THAT array copy
+      worker.postMessage(balls);
+
+      /* After the worker has finished calculating a frame of collision detection, it sends a message
+       * containing a copy of THAT balls array with the updated positions. The worker loop is running
+       * at 30 fps, while the render loop is running at 60 fps.
+       * Update THIS balls array in the main script using THOSE positions. THESE balls are rendered in drawFrame.
+       */
+      worker.addEventListener('message', function (event) {
+        for (var i = 0, balls_copy = event.data, len = balls_copy.length; i < len; i++) {
+          balls[i].x = balls_copy[i].x;
+          balls[i].y = balls_copy[i].y;
+        }
+        renderFrame = true; //used to avoid excessive repaints
+      }, false);
+
+      function draw (ball) {
+        ball.draw(context);
+      }
+
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        
+        if (renderFrame) {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          balls.forEach(draw);
+          renderFrame = false;
+        }
+      }());
+    };
+    </script>
+  </body>
+</html>
