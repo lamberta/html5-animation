@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Animated Sprite Sheet</title>
+    <link rel="stylesheet" href="../../examples/include/style.css">
+    <style>
+      /* Stack the background, canvas, and foreground elements on top of each other in a div.
+       */
+      #display {
+        position: relative;
+        width: 550px;
+        height: 400px;
+      }
+      #display img, #display canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #canvas {
+        background-color: transparent;
+      }
+      #spritesheet {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <div id="display">
+      <img src="./assets/background.png">
+      <canvas id="canvas" width="550" height="400"></canvas>
+      <img src="./assets/foreground.png">
+    </div>
+    <aside>
+      Press left and right arrow keys.<br/>
+      Images sampled from <em>King's Quest II: Romancing the Throne</em> (© Sierra Entertainment) are used for demonstration purposes only.<br/>
+      This example is not listed in the book.
+    </aside>
+    <img id="spritesheet" src="./assets/character.png">
+
+    <script src="../../examples/include/utils.js"></script>
+    <script src="./sprite.js"></script>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          spritesheet = document.getElementById('spritesheet'),
+          sprite = new Sprite(spritesheet, 6, 4), //params: image, columns, rows
+          right_boundary = canvas.width,
+          left_boundary = 0,
+          vx = 0;
+      
+      //initial character position
+      sprite.x = 100;
+      sprite.y = 260;
+
+      window.addEventListener('keydown', function (event) {
+        switch (event.keyCode) {
+        case 37:      //left
+          sprite.play(Sprite.LEFT);
+          vx = -2;
+          break;
+        case 39:      //right
+          sprite.play(Sprite.RIGHT);
+          vx = 2;
+          break;
+        case 38:      //up
+          sprite.play(Sprite.UP);
+          break;
+        case 40:      //down
+          sprite.play(Sprite.DOWN);
+          break;
+        }
+      }, false);
+
+      window.addEventListener('keyup', function () {
+        sprite.stop();
+        vx = 0;
+      }, false);
+      
+      (function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        sprite.x += vx;
+        //screen wrapping
+        if (sprite.x > right_boundary) {
+          sprite.x = left_boundary - sprite.width;
+        } else if (sprite.x + sprite.width < left_boundary) {
+          sprite.x = right_boundary;
+        }
+        
+        sprite.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>
