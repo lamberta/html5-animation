@@ -3,6 +3,10 @@
 Updates and corrections to [Foundation HTML5 Animation with JavaScript](http://lamberta.github.com/html5-animation/)—If
 you find any more, please let me know!
 
+## p. 69
+
+Chapter 4 should be titled "Rendering Techniques".
+
 ## p. 111
 
 An error at press time has caused an errant graphic to
