@@ -1,11 +1,17 @@
 # Errata Sheet
 
 Updates and corrections to [Foundation HTML5 Animation with JavaScript](http://lamberta.github.com/html5-animation/)—If
-you find any more, please let me know!
+you find any more, please let [me](https://github.com/lamberta) know!
 
-## p. 69
+## p. v, vii, 69
 
 Chapter 4 should be titled "Rendering Techniques".
+
+## p. 54, 55
+
+The division operation is extraneous to the equation abstraction. (Submitted by Peter Stema)
+
+    ball.y = centerY + Math.sin(angle) * range;
 
 ## p. 111
 
@@ -17,10 +23,10 @@ follows:
 should be able to use `Math.cos` and `Math.sin` to find the
 lengths of `vx` and `vy`.
 
-The side adjacent to the angle is vx. The cosine of an angle
+The side adjacent to the angle is `vx`. The cosine of an angle
 is the adjacent/hypotenuse. Or, stated another way, the
 adjacent side is the cosine of the angle times the
-hypotenuse. Similarly, the opposite side is vy. Sine is
+hypotenuse. Similarly, the opposite side is `vy`. Sine is
 opposite/hypotenuse, or the opposite is the sine times
 hypotenuse.
 
