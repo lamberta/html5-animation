@@ -13,6 +13,11 @@ The division operation is extraneous to the equation abstraction. (Submitted by 
 
     ball.y = centerY + Math.sin(angle) * range;
 
+## p. 67
+
+The last sentence should read:  
+  You should have no trouble creating some beautiful pictures or animations with trigonometry.
+
 ## p. 111
 
 An error at press time has caused an errant graphic to
