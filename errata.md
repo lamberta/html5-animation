@@ -44,6 +44,12 @@ Now don’t you dare forget to convert the 45 degrees to
 radians before passing it into the Math functions! This is
 what the code looks like after we plug in example values: ...
 
+## p. 160
+
+A minus sign did not print in the book for example `04-drag-and-move-1.html`:
+
+    vx = Math.random() * 10 - 5,
+
 ## p. 176
 
 In an updated Editor's Draft of the [W3C Animation-Timing](http://www.w3.org/TR/animation-timing/)
