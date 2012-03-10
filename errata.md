@@ -16,7 +16,7 @@ The division operation is extraneous to the equation abstraction. (Submitted by 
 ## p. 67
 
 The last sentence should read:  
-  You should have no trouble creating some beautiful pictures or animations with trigonometry.
+You should have no trouble creating some beautiful pictures or animations with trigonometry.
 
 ## p. 111
 
@@ -68,6 +68,16 @@ to reflect its name change:
                                      window.oCancelAnimationFrame || window.oCancelRequestAnimationFrame ||
                                      window.clearTimeout);
     }
+
+## p. 198
+
+In the `drawFrame` function, the following lines should be highlighted since they are new for this example:
+
+    springTo(ball0, ball2);
+    ...
+    springTo(ball1, ball2);
+    ...
+    context.lineTo(ball0.x, ball0.y);
 
 ## p. 462
 
