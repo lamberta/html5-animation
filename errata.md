@@ -85,6 +85,23 @@ In the `drawFrame` function, the following lines should be highlighted since the
     ...
     context.lineTo(ball0.x, ball0.y);
 
+## p. 230, 232
+
+A minus sign did not print in the book for examples `02-rotate-2.html` and `03-rotate-3.html`:
+
+    x2 = x1 * cos - y1 * sin,
+
+## p. 236
+
+A few minus signs did not print in the book for example `04-angle-bounce.html`:
+
+    //get position of ball, relative to line
+    var x1 = ball.x – line.x,
+        y1 = ball.y – line.y,
+        //rotate coordinates
+        ...
+        y2 = y1 * cos – x1 * sin,
+
 ## p. 462
 
 Exercise [14-time-based-3.html](https://github.com/lamberta/html5-animation/blob/master/examples/ch19/14-time-based-3.html)
