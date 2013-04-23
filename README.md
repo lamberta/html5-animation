@@ -1,5 +1,5 @@
 This is the example code and book exercises from *Foundation HTML5 Animation with JavaScript*, http://amzn.com/1430236655?tag=html5anim-20  
-The demos are available online to play with at http://lamberta.github.com/html5-animation/
+The demos are available online to play with at http://lamberta.github.io/html5-animation/
 
 The entire archive is available for download; either unpack the zip file, [html5-animation.zip](https://github.com/lamberta/html5-animation/zipball/master "Download this repository as a zip file"), or use the following [git](http://git-scm.com) command at your terminal prompt:  
 `git clone git://github.com/lamberta/html5-animation.git`
