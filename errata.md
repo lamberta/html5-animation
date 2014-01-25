@@ -37,6 +37,18 @@ abstraction (submitted by Peter Stema), and the book omits
 the line where the angle is incremented each frame
 (submitted by Steve Paget).
 
+### p. 60, p. 61
+
+In examples `08-circle.html` and `09-oval.html`, to match
+the text above, the sine and cosine functions should be
+reversed when calculating the ball's position. (Submitted by
+Gerald Cullen)
+
+~~~
+ball.x = centerX + Math.cos(angle) * radius;
+ball.y = centerY + Math.sin(angle) * radius;
+~~~
+
 ### p. 67
 
 Typo in the last sentence, it should read: *You should have
