@@ -55,6 +55,17 @@ Typo in the last sentence, it should read: *You should have
 no trouble creating some beautiful pictures or animations
 with trigonometry.*
 
+### p. 82, p. 84
+
+In examples `04-multi-curve-1.html` and
+`05-multi-curve-2.html`, the code to move to the first point
+should read: (Submitted by Gerald Cullen)
+
+~~~
+context.beginPath();
+context.moveTo(points[0].x, points[0].y);
+~~~
+
 ### p. 111
 
 A production error caused an errant graphic to obscure
