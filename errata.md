@@ -11,7 +11,13 @@ Chapter 4 should be titled "Rendering Techniques".
 
 The division operation is extraneous to the equation abstraction. (Submitted by Peter Stema)
 
+The book omits the line where the angle is incremented each frame. (Submitted by
+Steve Paget)
+
+    ball.x += xspeed;
     ball.y = centerY + Math.sin(angle) * range;
+    angle += yspeed;
+    ball.draw(context);
 
 ## p. 67
 
