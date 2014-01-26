@@ -29,7 +29,7 @@
 
       //move to the first point
       context.beginPath();
-      context.moveTo(points[0].x, points[1].y);
+      context.moveTo(points[0].x, points[0].y);
       //and loop through each successive pair
       for (i = 1; i < numPoints; i += 2) {
         context.quadraticCurveTo(points[i].x, points[i].y,

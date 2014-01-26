@@ -28,8 +28,8 @@
         window.requestAnimationFrame(drawFrame, canvas);
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        ball.x = centerX + Math.sin(angle) * radius;
-        ball.y = centerY + Math.cos(angle) * radius;
+        ball.x = centerX + Math.cos(angle) * radius;
+        ball.y = centerY + Math.sin(angle) * radius;
         angle += speed;
         ball.draw(context);
       }());

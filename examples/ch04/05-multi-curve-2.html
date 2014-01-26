@@ -29,7 +29,7 @@
 
       //move to the first point
       context.beginPath();
-      context.moveTo(points[0].x, points[1].y);
+      context.moveTo(points[0].x, points[0].y);
       //curve through the rest, stopping at each midpoint
       for (i = 1; i < numPoints - 2; i++) {
         ctrlPoint.x = (points[i].x + points[i+1].x) / 2;
