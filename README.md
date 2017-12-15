@@ -25,6 +25,7 @@ And if you enjoy the book, please spread the word and write a [review](http://ww
 One of the great things about this book is that many of the concepts apply not only to JavaScript, but to computer animation in general. All you need is support for a drawing surface and a few simple commands, and you can apply these ideas using whatever programming language you want! And if you do, please send me a message and I'll list it here.
 
 * Dart: https://github.com/financeCoding/dart-html5-animation (Mike Coding)
+* C++/SFML: https://github.com/pulpobot/C-SFML-html5-animation (Santiago Alvarez)
 
 # Disclaimer
 
