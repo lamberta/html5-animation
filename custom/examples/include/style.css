@@ -1,0 +1,138 @@
+/* Some HTML5 Tags
+ */
+
+ aside, footer, header, nav, section {
+    display: block;
+  }
+  
+  /* Examples
+   */
+  
+  body {
+    background-color: #bbb;
+    color: #383838;
+  }
+  
+  #canvas {
+    background-color: #fff;
+  }
+  
+  header {
+    padding-bottom: 10px;
+  }
+  
+  header a {
+    color: #30f;
+    text-decoration: none;
+  }
+  
+  aside {
+    padding-top: 6px;
+  }
+  
+  /* Index page
+   */
+  
+  #index-body {
+    background-color: #fdeba1;
+    font-family: "Vollkorn", serif;
+    color: #000;
+  }
+  
+  #index-body a {
+    text-decoration: none;
+    color: #b30300;
+  }
+  
+  #index-body #description, #index-body #exercises {
+    overflow: auto;
+    max-width: 900px;
+    margin: 0px auto 20px auto;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    background-color: #fff;
+    border-radius: 15px;
+  }
+  
+  #index-body #description {
+    margin-top: 40px;
+  }
+  
+  #index-body h1 {
+    color: #b30300;
+  }
+  
+  #index-body #description h2 {
+    margin-bottom: 0;
+  }
+  
+  #index-body h1 a {
+    text-decoration: underline;
+    color: #b30300;
+  }
+  
+  #index-body li h2, #index-body li h3, #index-body li h4 {
+    color: #000;
+  }
+  
+  #index-body li h3 {
+    margin-bottom: 0px;
+  }
+  
+  #index-body #description ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  #index-body #description ul li {
+   padding-bottom: 0.6em;
+  }
+  .container {
+    display: table;
+    width: 100%;
+    height: auto;
+  }
+  .container .text {
+      display:table-cell;
+      height:100%;
+      vertical-align:middle;
+  }
+  .container img {
+    padding: 0 20px;
+    display: block;
+    float: right;
+  }
+  .container .clear {
+    clear: both;
+  }
+  
+  #exercises ul {
+    margin: 0;
+    padding: 4px 20px 10px 20px;
+  }
+  
+  #exercises ol {
+    margin: 0 20px 10px 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  #exercises ol li {
+    padding-top: 5px;
+  }
+  
+  #exercises ol ol ol {
+    padding-left: 60px;
+    list-style-type: decimal-leading-zero;
+  }
+  
+  #exercises ol ol ol li img, #exercises ol ol li img {
+    margin-left: 4px;
+    margin-bottom: -10;
+  }
+  
+  #exercises h2 {
+    margin: 10px 0 0 0;
+  }
+  
