@@ -21,7 +21,8 @@
       const {width, height} = canvas;
       const centerX = width / 2;
       const centerY = height / 2;
-      const range = 100;
+      const rangeX = 150;
+      const rangeY = 50;
       let angle = 0;
       const angleSpeed = 0.05;
 
@@ -29,8 +30,8 @@
         window.requestAnimationFrame(draw, canvas);
         context.clearRect(0, 0, width, height);
 
-        ball.x = centerX + Math.cos(angle) * range;
-        ball.y = centerY + Math.sin(angle) * range;
+        ball.x = centerX + Math.cos(angle) * rangeX;
+        ball.y = centerY + Math.sin(angle) * rangeY;
         angle += angleSpeed;
 
         ball.draw(context);

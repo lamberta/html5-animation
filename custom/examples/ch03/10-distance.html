@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script type="module">
+    import '../include/utils.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d');
+      const {width, height} = canvas;
+      const pointSize = 4;
+      const pointFix = pointSize / 2;
+      const pointA = {
+        x: Math.floor(Math.random() * width),
+        y: Math.floor(Math.random() * height),
+        color: '#ff0000'
+      };
+      const pointB = {
+        x: Math.floor(Math.random() * width),
+        y: Math.floor(Math.random() * height),
+        color: '#0000FF'
+      };
+      context.fillStyle = pointA.color;
+      context.fillRect(pointA.x - pointFix, pointA.y - pointFix, pointSize, pointSize);
+
+      context.fillStyle = pointB.color;
+      context.fillRect(pointB.x - pointFix, pointB.y - pointFix, pointSize, pointSize);
+
+      const dx = pointA.x - pointB.x;
+      const dy = pointA.y - pointB.y;
+      const distance = Math.sqrt(dx * dx, dy * dy);
+      console.log(`the distance of pointA and pointB is ${distance}`);
+    };
+    </script>
+  </body>
+</html>
