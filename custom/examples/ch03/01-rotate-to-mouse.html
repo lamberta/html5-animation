@@ -23,7 +23,7 @@
       arrow.x = canvas.width / 2
       arrow.y = canvas.height / 2
 
-      const drawFrame = () => {
+      ;(function drawFrame () {
        window.requestAnimationFrame(drawFrame, canvas)
         context.clearRect(0, 0, canvas.width, canvas.height)
 
@@ -32,9 +32,7 @@
 
         arrow.rotation = Math.atan2(dy, dx)
         arrow.draw(context)
-      }
-
-      drawFrame()
+      }())
     };
     </script>
   </body>
