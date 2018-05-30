@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script type="module">
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            pointNum = 9,
+            points = [];
+      
+      for (let i = 0; i < pointNum; i++) {
+        points.push({
+          x: Math.floor(Math.random() * width),
+          y: Math.floor(Math.random() * height)
+        })
+      }
+
+      function getCenterPoint(pointA, pointB) {
+        return {
+          x: (pointB.x + pointA.x) / 2,
+          y: (pointB.y + pointA.y) / 2,
+        }
+      }
+
+      context.beginPath();
+      const controlPointStart = getCenterPoint(points[0], points[pointNum - 1])
+      context.moveTo(controlPointStart.x, controlPointStart.y);
+      let i = 0;
+      for (i; i < pointNum - 1; i++) {
+        if (points[i + 1]) {
+          const controlPoint = points[i],
+                endPoint = getCenterPoint(controlPoint, points[i + 1])
+          
+          context.quadraticCurveTo(
+            controlPoint.x, controlPoint.y,
+            endPoint.x, endPoint.y
+          );
+        }
+      }
+      context.quadraticCurveTo(
+        points[i].x, points[i].y,
+        controlPointStart.x, controlPointStart.y
+      );
+      context.stroke();
+    };
+    </script>
+  </body>
+</html>
+

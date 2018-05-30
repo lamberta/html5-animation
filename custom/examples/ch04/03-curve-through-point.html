@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script type="module">
+    import {captureMouse} from '../include/utils.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            mouse = captureMouse(canvas),
+            {width, height} = canvas,
+            beginPoint = {
+              x: 100,
+              y: height / 2
+            },
+            endPoint = {
+              x: 300,
+              y: height / 2
+            };
+
+      canvas.addEventListener('mousemove', () => {
+        context.clearRect(0, 0, width, height);
+        let controlPointX = mouse.x * 2 - (beginPoint.x + endPoint.x) / 2,
+            controlPointY = mouse.y * 2 - (beginPoint.y + endPoint.y) / 2;
+        
+        context.beginPath();
+        context.moveTo(beginPoint.x, beginPoint.y);
+        context.quadraticCurveTo(controlPointX, controlPointY, endPoint.x, endPoint.y);
+        // context.closePath();
+        context.stroke();
+      }, false);
+    };
+    </script>
+  </body>
+</html>
+
