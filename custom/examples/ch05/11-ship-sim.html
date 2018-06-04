@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import '../include/utils.js';
+    import keycode from '../../xtras/keycode.js';
+    import Ship from './classes/ship.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            ship = new Ship(),
+            angleSpeed = 0.05,
+            force = 0.05;
+      let a = 0,
+          vr = 0,
+          vx = 0,
+          vy = 0;
+      
+      ship.x = width / 2;
+      ship.y = height / 2;
+      console.log({width, height})
+
+      window.addEventListener('keydown', e => {
+        switch (e.keyCode) {
+          case keycode.LEFT:
+            vr = angleSpeed * -1;
+            break;
+          case keycode.RIGHT:
+            vr = angleSpeed;
+            break;
+          case keycode.UP:
+            a = force;
+            ship.showFlame = true;
+            break;
+        }
+      }, false);
+
+      window.addEventListener('keyup', () => {
+        a = 0;
+        ship.showFlame = false;
+        vr = 0;
+      }, false);
+
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        ship.rotation += vr;
+
+        const ax = Math.cos(ship.rotation) * a,
+              ay = Math.sin(ship.rotation) * a;
+
+        vx += ax;
+        vy += ay;
+        ship.x += vx;
+        ship.y += vy;
+        ship.draw(context);
+      }());
+      console.log(ship)
+    }
+    </script>
+  </body>
+</html>

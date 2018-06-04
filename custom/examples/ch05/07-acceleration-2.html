@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import '../include/utils.js';
+    import keycode from '../../xtras/keycode.js';
+    import Ball from './classes/ball.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            ball = new Ball();
+      let ax = 0,
+          vx = 0;
+      
+      ball.x = width / 2;
+      ball.y = height / 2;
+
+      window.addEventListener('keydown', e => {
+        if (e.keyCode === keycode.LEFT) {
+          ax -= 0.01
+        }
+        if (e.keyCode === keycode.RIGHT) {
+          ax += 0.01;
+        }
+      }, false);
+
+      window.addEventListener('keyup', () => {
+        ax = 0;
+      }, false);
+
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        vx += ax;
+        ball.x += vx;
+        ball.draw(context);
+      }());
+    }
+    </script>
+  </body>
+</html>
