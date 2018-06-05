@@ -7,6 +7,8 @@ export default class Ball {
     this.x = 0;
     this.y = 0;
     this.radius = radius;
+    this.vx = 0;
+    this.vy = 0;
     this.rotation = 0;
     this.scaleX = 1;
     this.scaleY = 1;
