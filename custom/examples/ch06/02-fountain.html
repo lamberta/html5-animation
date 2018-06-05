@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {parseColor} from '../include/utils.js';
+    import Ball from './classes/ball.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            balls = [],
+            ballNum = 80,
+            maxAngle = Math.PI * 2,
+            baseSpeedX = 0,
+            maxSpeedX = 1,
+            baseSpeedY = 10,
+            maxSpeedY = 8,
+            grativity = 0.5;
+
+      function getRandomSpeed(axis = 'y') {
+        if (axis === 'y') {
+          // 喷泉朝上喷，y减少
+          return (baseSpeedY + Math.random() * maxSpeedY) * -1;
+        }
+
+        // 随机方向
+        let direction = Math.random() > 0.5 ? -1 : 1
+
+        // 在保证最小速度的情况下，随机一个速度范围，避免某些球太慢
+        let value = baseSpeedX + Math.random() * maxSpeedX
+
+        return value * direction
+      }
+
+      function setBall(ball = new Ball()) {
+        ball.radius = 2;
+        ball.color = parseColor(Math.random() * 0xffffff);
+        ball.x = width / 2;
+        ball.y = height;
+        ball.vx = getRandomSpeed('x');
+        ball.vy = getRandomSpeed('y');
+        return ball;
+      }
+
+      for (let i = 0; i < ballNum; i++) {
+        let ball = setBall();
+        balls.push(ball);
+      }
+
+      function isOut(ball, i) {
+        if ((ball.x - ball.radius > width) ||
+            (ball.x + ball.radius < 0) ||
+            (ball.y - ball.radius > height) ||
+            (ball.y + ball.radius < 0)
+        ) {
+          return true
+        }
+        return false
+      }
+
+      function draw(ball) {
+        ball.draw(context)
+        ball.vy += grativity;
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        if (isOut(ball)) {
+          setBall(ball)
+        }
+
+      }
+      
+      ;(function drawFrame(){
+        window.requestAnimationFrame(drawFrame);
+        context.clearRect(0, 0, width, height);
+        
+        let i = balls.length;
+        while (i--) {
+          draw(balls[i])
+        }
+      }());
+    }
+    </script>
+  </body>
+</html>
