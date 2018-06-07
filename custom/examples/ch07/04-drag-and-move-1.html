@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {circleContainsPoint, captureMouse} from '../include/utils.js';
+    import Ball from './classes/ball.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            mouse = captureMouse(canvas),
+            ball = new Ball(),
+            grativity = 0.1,
+            loose = -0.7;
+
+      const top = 0,
+            right = width,
+            bottom = height,
+            left = 0;
+      
+      let isDrag = false;
+
+      ball.vx = Math.random() * 10 - 5;
+      ball.vy = Math.random() * 10 - 5;
+      
+      ball.x = width / 2;
+      ball.y = height / 2;
+
+      canvas.addEventListener('mousedown', () => {
+        isDrag = circleContainsPoint(ball, mouse);
+      }, false);
+      canvas.addEventListener('mouseup', () => {
+        isDrag = false;
+        ball.vy = 0;
+        ball.vx = 0;
+      }, false);
+
+      /**
+       * 检测飞船是否飞出舞台，如果是，让飞船从另一侧进入
+       */
+      function bouncingBall(ball) {
+        if (ball.x + ball.radius >= right) {
+          ball.x = right - ball.radius
+          ball.vx *= loose;
+        } else if (ball.x - ball.radius <= left) {
+          ball.x = left + ball.radius
+          ball.vx *= loose;
+        }
+
+        if (ball.y + ball.radius >= bottom) {
+          ball.y = bottom - ball.radius
+          ball.vy *= loose;
+
+          // 反弹的时候，如果速度很小，就放弃反弹 
+          // 避免太小的数值的计算
+          if (ball.vy >= -0.1) {
+            console.log('cancel bouncing with vy: ', ball.vy)
+            ball.vy = 0;
+          }
+
+        } else if (ball.y - ball.radius <= top) {
+          ball.y = top + ball.radius
+          ball.vy *= loose;
+        }
+      }
+
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        if (isDrag) {
+          ball.x = mouse.x;
+          ball.y = mouse.y;
+          ball.draw(context);
+          return
+        }
+        ball.vy += grativity;
+
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        console.log(ball.vy)
+        bouncingBall(ball);
+        ball.draw(context);
+      }());
+    }
+    </script>
+  </body>
+</html>

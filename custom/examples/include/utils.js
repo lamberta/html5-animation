@@ -144,3 +144,31 @@ export function parseColor (color, toNumber = false) {
     return color;
   }
 };
+
+/**
+ * Determine if a rectangle contains the coordinates (x,y) within it's boundaries.
+ * @param {object}  rect  Object with properties: x, y, width, height.
+ * @param {number}  x     Coordinate position x.
+ * @param {number}  y     Coordinate position y.
+ * @return {boolean}
+ */
+export function rectContainsPoint(rect, x, y) {
+  return !(x < rect.x ||
+           x > rect.x + rect.width ||
+           y < rect.y ||
+           y > rect.y + rect.height);
+}
+
+/**
+ * 检测某个点跟某个圆是否接触
+ * @param {Object} circle 圆 {radius, x, y}
+ * @param {Object} point 点 {x, y}
+ * @return {Boolean} true 接触  false 没接触
+ */
+export function circleContainsPoint(circle, point) {
+  const dx = point.x - circle.x,
+    dy = point.y - circle.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  return distance <= circle.radius
+}
