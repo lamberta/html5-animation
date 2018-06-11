@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {captureMouse, circleContainsPoint} from '../include/utils.js';
+    import Ball from './classes/ball.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            mouse = captureMouse(canvas),
+            ball = new Ball(20),
+            spring = 0.01,
+            targets = [],
+            friction = 0.95;
+      let targetNum = 20;
+
+      while(targetNum--) {
+        const b = new Ball(10, '#3333ffff');
+        b.x = Math.random() * width;
+        b.y = Math.random() * height;
+        targets.push(b);
+      }
+
+      canvas.addEventListener('mousedown', () => {
+        targets.forEach(target => {
+          if (circleContainsPoint(target, mouse)) {
+            target.isDrag = true
+          }
+        })
+      }, false);
+      
+      canvas.addEventListener('mouseup', () => {
+        targets.forEach(target => {
+          target.isDrag = false
+        })
+      });
+
+      // 应用弹力
+      function applySpring() {
+        const {x, y} = ball;
+
+        targets.forEach(target => {
+          if (target.isDrag) {
+            target.x = mouse.x;
+            target.y = mouse.y;
+          }
+
+          ball.vx += (target.x - x) * spring;
+          ball.vy += (target.y - y) * spring;
+        })
+      }
+
+      // 绘制受力点和连线
+      function drawTargets() {
+        context.beginPath();
+        targets.forEach(target => {
+          context.moveTo(target.x, target.y);
+          context.lineTo(ball.x, ball.y);
+          context.stroke();
+          target.draw(context);
+        });
+      }
+
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        applySpring();
+
+        ball.vx *= friction;
+        ball.vy *= friction;
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        drawTargets();
+
+        ball.draw(context);
+      }());
+    }
+    </script>
+  </body>
+</html>

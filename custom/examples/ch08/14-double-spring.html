@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {captureMouse, circleContainsPoint, parseColor} from '../include/utils.js';
+    import Ball from './classes/ball.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            mouse = captureMouse(canvas),
+            balls = [],
+            spring = 0.03,
+            friction = 0.9,
+            offset = 50;
+      let ballNum = 2;
+
+      while(ballNum--) {
+        let ball = new Ball(20, parseColor(Math.random() * 0xffffff))
+        ball.x = Math.random() * width;
+        ball.y = Math.random() * height;
+        balls.push(ball)
+      }
+
+      function getCenterPoint(ball1, ball2) {
+        return {
+          x: (ball1.x + ball2.x) / 2,
+          y: (ball1.y + ball2.y) / 2
+        }
+      }
+      
+      function getRealTarget(ball, mouse, offset) {
+        const dx = ball.x - mouse.x,
+              dy = ball.y - mouse.y,
+              angle = Math.atan2(dy, dx);
+        
+        return {
+          x: mouse.x + Math.cos(angle) * offset,
+          y: mouse.y + Math.sin(angle) * offset
+        };
+      }
+
+      function moveBall(ball) {
+        if (ball.isDrag) {
+          ball.x = mouse.x;
+          ball.y = mouse.y;
+        }
+      }
+
+      function drawBall(ball, centerPoint) {
+        const target = getRealTarget(ball, centerPoint, offset);
+
+        ball.vx += (target.x - ball.x) * spring;
+        ball.vy += (target.y - ball.y) * spring;
+        ball.vx *= friction;
+        ball.vy *= friction;
+
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+      }
+
+      canvas.addEventListener('mousedown', () => {
+        balls.forEach(ball => {
+          if (circleContainsPoint(ball, mouse)) {
+            ball.isDrag = true
+          }
+        })
+      }, false);
+      canvas.addEventListener('mouseup', () => {
+        balls.forEach(ball => {
+          ball.isDrag = false
+        })
+      }, false)
+      
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        balls.forEach(moveBall);
+
+        const centerPoint = getCenterPoint(balls[0], balls[1])
+        if (!balls[0].isDrag) {
+          drawBall(balls[0], centerPoint)
+        }
+        if (!balls[1].isDrag) {
+          drawBall(balls[1], centerPoint)
+        }
+
+        context.beginPath();
+        context.moveTo(balls[0].x, balls[0].y);
+        context.lineTo(balls[1].x, balls[1].y);
+        context.stroke();
+
+        balls.forEach(ball => ball.draw(context));
+      }());
+    }
+    </script>
+  </body>
+</html>

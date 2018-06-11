@@ -24,50 +24,42 @@
             context = canvas.getContext('2d'),
             {width, height} = canvas,
             mouse = captureMouse(canvas),
-            balls = [],
-            ballNum = 8,
-            spring = 0.06,
-            grativity = 2,
-            friction = 0.8;
+            ball = new Ball(),
+            spring = 0.03,
+            friction = 0.9,
+            offset = 100;
       
-      for (let i = 0; i < ballNum; i++) {
-        balls.push(new Ball(10));
-      }
-
-      function follow(ball, target) {
-        ball.vx += (target.x - ball.x) * spring;
-        ball.vy += (target.y - ball.y) * spring;
-
-        ball.vy += grativity;
-
-        ball.vx *= friction;
-        ball.vy *= friction;
-
-
-        ball.x += ball.vx;
-        ball.y += ball.vy;
+      function getRealTarget(ball, mouse, offset) {
+        const dx = ball.x - mouse.x,
+              dy = ball.y - mouse.y,
+              angle = Math.atan2(dy, dx);
+        
+        return {
+          x: mouse.x + Math.cos(angle) * offset,
+          y: mouse.y + Math.sin(angle) * offset
+        };
       }
       
       ;(function draw(){
         window.requestAnimationFrame(draw);
         context.clearRect(0, 0, width, height);
 
-        balls.reduce((target, ball) => {
-          follow(ball, target);
-          return ball;
-        }, mouse);
+        const target = getRealTarget(ball, mouse, offset);
+
+        ball.vx += (target.x - ball.x) * spring;
+        ball.vy += (target.y - ball.y) * spring;
+        ball.vx *= friction;
+        ball.vy *= friction;
+
+        ball.x += ball.vx;
+        ball.y += ball.vy;
 
         context.beginPath();
-        context.moveTo(mouse.x, mouse.y);
-        balls.forEach(ball => {
-          context.lineTo(ball.x, ball.y);
-        });
+        context.moveTo(ball.x, ball.y);
+        context.lineTo(mouse.x, mouse.y);
         context.stroke();
 
-        balls.forEach(ball => {
-          ball.draw(context);
-        });
-
+        ball.draw(context);
       }());
     }
     </script>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {captureMouse, circleContainsPoint, parseColor} from '../include/utils.js';
+    import Ball from './classes/ball.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            mouse = captureMouse(canvas),
+            spring = 0.03,
+            friction = 0.9,
+            offset = 50;
+      let balls = [];
+      let ballNum = 6;
+      let isDragingBall = false;
+      let firstBall = null;
+
+      while(ballNum--) {
+        let ball = new Ball(20, parseColor(Math.random() * 0xffffff))
+        ball.x = Math.random() * width;
+        ball.y = Math.random() * height;
+        balls.push(ball)
+
+        if (!firstBall) {
+          firstBall = ball
+          ball.angle = 0
+        } else {
+          const dx = ball.x - firstBall.x,
+                dy = ball.y - firstBall.y;
+          
+          ball.angle = Math.atan2(dy, dx);
+        }
+      }
+
+      // 尝试让球连线是一个正多边形
+      balls = balls.sort((ballA, ballB) => {
+        return ballA.angle - ballB.angle
+      })
+
+      function getCenterPoint(ball1, ball2) {
+        return {
+          x: (ball1.x + ball2.x) / 2,
+          y: (ball1.y + ball2.y) / 2
+        }
+      }
+      
+      function getRealTarget(ball, mouse, offset) {
+        const dx = ball.x - mouse.x,
+              dy = ball.y - mouse.y,
+              angle = Math.atan2(dy, dx);
+        
+        return {
+          x: mouse.x + Math.cos(angle) * offset,
+          y: mouse.y + Math.sin(angle) * offset
+        };
+      }
+
+      // 拖拽球
+      function dragBall(ball) {
+        if (ball.isDrag) {
+          ball.x = mouse.x;
+          ball.y = mouse.y;
+        }
+      }
+
+      // 应用弹力
+      function applySpring(ball, centerPoint) {
+        const target = getRealTarget(ball, centerPoint, offset);
+
+        ball.vx += (target.x - ball.x) * spring;
+        ball.vy += (target.y - ball.y) * spring;
+      }
+
+      // 最终移动球
+      function moveBall(ball) {
+        ball.vx *= friction;
+        ball.vy *= friction;
+
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+      }
+
+      // 遍历所有的球，设定球之间的作用力
+      function setAllBalls() {
+        for(let i = 0, len = balls.length; i < len; i++) {
+          let nextIndex = (i + 1) % len;
+          let ballA = balls[i],
+              ballB = balls[nextIndex];
+          
+          const centerPoint = getCenterPoint(ballA, ballB)
+          if (!ballA.isDrag) {
+            applySpring(ballA, centerPoint)
+          }
+          if (!ballB.isDrag) {
+            applySpring(ballB, centerPoint)
+          }
+            
+        }
+      }
+
+      function drawLines() {
+        context.beginPath();
+        context.moveTo(balls[0].x, balls[0].y);
+        for (let i = 1, len = balls.length; i <= len; i++) {
+          let index = i % len;
+          context.lineTo(balls[index].x, balls[index].y);
+        }
+        context.stroke();
+      }
+
+      canvas.addEventListener('mousedown', () => {
+        balls.forEach(ball => {
+          if (circleContainsPoint(ball, mouse)) {
+            if (!isDragingBall) {
+              ball.isDrag = true
+              isDragingBall = true
+            }
+          }
+        })
+      }, false);
+      canvas.addEventListener('mouseup', () => {
+        balls.forEach(ball => {
+          ball.isDrag = false
+        })
+        isDragingBall = false
+      }, false)
+      
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        balls.forEach(dragBall);
+        setAllBalls();
+        balls.forEach(ball => moveBall(ball));
+        drawLines()
+        balls.forEach(ball => ball.draw(context));
+      }());
+    }
+    </script>
+  </body>
+</html>
