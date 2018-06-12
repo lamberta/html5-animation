@@ -18,7 +18,7 @@
     
     <script type="module">
     import {captureMouse, circleContainsPoint, parseColor} from '../include/utils.js';
-    import Ball from './classes/ball.js';
+    import Ball from './classes/ball-with-text.js';
     window.onload = function () {
       const canvas = document.getElementById('canvas'),
             context = canvas.getContext('2d'),
@@ -28,34 +28,93 @@
             friction = 0.9,
             offset = 50;
       let balls = [];
-      let ballNum = 3;
+      let tempBalls = [];
+      let ballNum = 8;
       let isDragingBall = false;
-      let firstBall = null;
 
       while(ballNum--) {
-        let ball = new Ball(20, parseColor(Math.random() * 0xffffff))
+        let ball = new Ball(10, parseColor(Math.random() * 0xffffff))
         ball.x = Math.random() * width;
         ball.y = Math.random() * height;
-        balls.push(ball)
-
-        if (!firstBall) {
-          firstBall = ball
-          firstBall.color = '#ff0000'
-          ball.angle = 0
-        } else {
-          const dx = ball.x - firstBall.x,
-                dy = ball.y - firstBall.y;
-          
-          ball.angle = Math.atan2(dy, dx);
-        }
+        tempBalls.push(ball)
       }
 
-      // 尝试让球连线是一个正多边形
-      balls = balls.sort((ballA, ballB) => {
-        return ballB.angle - ballA.angle
+      // 让点按X轴升序排序
+      tempBalls = tempBalls.sort((ballA, ballB) => {
+        return ballA.x - ballB.x
+      })
+
+      // 找X轴左右极点
+      let firstBall = tempBalls[0],
+          lastBall = tempBalls[tempBalls.length -1];
+      let smallXBalls = tempBalls.filter(ball => ball.x === firstBall.x),
+          bigXBalls = tempBalls.filter(ball => ball.x === lastBall.x)
+      
+      // 处理左右极点有多个的情况
+      if (smallXBalls.length > 1) {
+        smallXBalls.sort((ballA, ballB) => {
+          return ballB.y - ballA.y
+        })
+      }
+      if (bigXBalls.length > 1) {
+        bigXBalls.sort((ballA, ballB) => {
+          return ballB.y - ballA.y
+        })
+      }
+
+      firstBall = smallXBalls[0]
+      lastBall = bigXBalls[0]
+
+      // 获得极点连线的角度
+      let splitLineAngle = Math.atan2(lastBall.y - firstBall.y, lastBall.x - firstBall.x);
+      let upperBalls = [],
+          lowerBalls = [];
+        
+      // 所有其他点跟firstBall计算角度
+      // 大于splitLineAngle的都是下链
+      // 其他是上链
+      tempBalls.forEach(ball => {
+        if (ball === firstBall || ball === lastBall) {
+          return false
+        }
+        let angle = Math.atan2(ball.y - firstBall.y, ball.x - firstBall.x);
+        if (angle > splitLineAngle) {
+          lowerBalls.push(ball)
+        } else {
+          upperBalls.push(ball)
+        }
+      })
+
+      // 处理X轴相同情况的排序
+      lowerBalls = lowerBalls.sort((ballA, ballB) => {
+        if (ballA.x !== ballB.x) {
+          return ballA.x - ballB.x
+        }
+        return ballB.y - ballA.y
+      })
+
+      upperBalls = upperBalls.sort((ballA, ballB) => {
+        if (ballA.x !== ballB.x) {
+          return ballB.x - ballA.x
+        }
+        return ballB.y - ballB.x
+      })
+
+      // 逆时针连接所有的点
+      balls = [firstBall].concat(lowerBalls, [lastBall], upperBalls)
+
+      balls = balls.map((ball, i) => {
+        ball.text = i + 1;
+        return ball
       })
 
       console.log(balls)
+      console.log({
+        firstBall: firstBall.text,
+        lastBall: lastBall.text,
+        upperBalls: upperBalls.map(ball => ball.text),
+        lowerBalls: lowerBalls.map(ball => ball.text)
+      })
 
       function getCenterPoint(ball1, ball2) {
         return {
