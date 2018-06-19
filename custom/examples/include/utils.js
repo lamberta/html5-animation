@@ -148,15 +148,14 @@ export function parseColor (color, toNumber = false) {
 /**
  * Determine if a rectangle contains the coordinates (x,y) within it's boundaries.
  * @param {object}  rect  Object with properties: x, y, width, height.
- * @param {number}  x     Coordinate position x.
- * @param {number}  y     Coordinate position y.
+ * @param {object}  point  Object with properties: x, y.
  * @return {boolean}
  */
-export function rectContainsPoint(rect, x, y) {
-  return !(x < rect.x ||
-           x > rect.x + rect.width ||
-           y < rect.y ||
-           y > rect.y + rect.height);
+export function rectContainsPoint(rect, point) {
+  return !(point.x < rect.x ||
+           point.x > rect.x + rect.width ||
+           point.y < rect.y ||
+           point.y > rect.y + rect.height);
 }
 
 /**
