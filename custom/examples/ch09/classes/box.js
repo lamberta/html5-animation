@@ -1,3 +1,5 @@
+import {parseColor} from '../../include/utils.js';
+
 export default class Box {
   constructor(width = 50, height = 50, color = '#ff0000') {
     this.x = 0;
@@ -10,10 +12,10 @@ export default class Box {
     this.rotation = 0;
     this.scaleX = 1;
     this.scaleY = 1;
-    this.color = utils.parseColor(color);
+    this.color = parseColor(color);
     this.lineWidth = 1;
   }
-  draw() {
+  draw(context) {
     context.save();
     context.translate(this.x, this.y);
     context.rotate(this.rotation);
