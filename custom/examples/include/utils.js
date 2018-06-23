@@ -172,6 +172,19 @@ export function circleContainsPoint(circle, point) {
   return distance <= circle.radius
 }
 
+/**
+ * 检测两个圆是否相交
+ * @param {Object} circleA 有x,y,radius的对象
+ * @param {Object} circleB 有x,y,radius的对象
+ * @returns {Boolean}
+ */
+export function interCircles(circleA, circleB) {
+  const dx = circleA.x - circleB.x,
+    dy = circleA.y - circleB.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  return distance < (circleA.radius + circleB.radius)
+}
 
 /**
  * Determine if two rectangles overlap.
