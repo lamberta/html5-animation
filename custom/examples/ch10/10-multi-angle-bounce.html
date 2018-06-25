@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import Ball from './classes/ball.js'
+    import Line from './classes/line.js'
+    import '../include/utils.js'
+
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            centerX = width / 2,
+            maxAngle = 45 * Math.PI / 180,
+            ball = new Ball(20),
+            lines = [],
+            numLine = 5,
+            gravity = 0.2,
+            angle = 10 * Math.PI / 180,
+            bouncing = -0.6;
+      
+      
+      //create 5 lines, position and rotate
+      lines[0] = new Line(-50, 0, 50, 0);
+      lines[0].x = 100;
+      lines[0].y = 100;
+      lines[0].rotation = 30 * Math.PI / 180;
+
+      lines[1] = new Line(-50, 0, 50, 0);
+      lines[1].x = 100;
+      lines[1].y = 200;
+      lines[1].rotation = 45 * Math.PI / 180;
+
+      lines[2] = new Line(-50, 0, 50, 0);
+      lines[2].x = 220;
+      lines[2].y = 150;
+      lines[2].rotation = -20 * Math.PI / 180;
+
+      lines[3] = new Line(-50, 0, 50, 0);
+      lines[3].x = 150;
+      lines[3].y = 330;
+      lines[3].rotation = 10 * Math.PI / 180;
+
+      lines[4] = new Line(-50, 0, 50, 0);
+      lines[4].x = 230;
+      lines[4].y = 250;
+      lines[4].rotation = -30 * Math.PI / 180;
+
+      ball.x = 100;
+      ball.y = 50;
+
+      function hitDetection(line) {
+        const bounds = line.getBounds()
+
+        const isHit = ball.x + ball.radius > bounds.x &&
+                      ball.x - ball.radius < bounds.x + bounds.width;
+        if (!isHit) {
+          return;
+        }
+        const cos = Math.cos(line.rotation),
+              sin = Math.sin(line.rotation);
+
+        // rotate cordination
+        let {vx, vy} = ball;
+        let dx = ball.x - line.x,
+            dy = ball.y - line.y,
+            y1 = dy * cos + (dx * sin * -1),
+            vy1 = vy * cos + (vx * sin * -1);
+
+        if (y1 > ball.radius * -1 && y1 < vy1) {
+          // rotate speed
+          let x1 = dx * cos - (dy * sin * -1),
+              vx1 = vx * cos - (vy * sin * -1);
+          
+          // bouncing
+          y1 = ball.radius * -1;
+          vy1 = vy1 * bouncing;
+
+          // rotate back all
+          const x2 = x1 * cos - y1 * sin,
+                y2 = y1 * cos + x1 * sin,
+                vx2 = vx1 * cos - vy1 * sin,
+                vy2 = vy1 * cos + vx1 * sin;
+
+          ball.x = line.x + x2;
+          ball.y = line.y + y2;
+          ball.vx = vx2;
+          ball.vy = vy2;
+        }
+      }
+
+      function boundaryDetection() {
+        const {x, y, radius} = ball;
+        if (x - radius < 0) {
+          ball.x = radius;
+          ball.vx *= bouncing;
+        }
+        if (x + radius > width) {
+          ball.x = width - radius;
+          ball.vx *= bouncing;
+        }
+        if (y + radius > height) {
+          ball.y = height - radius;
+          ball.vy *= bouncing;
+        }
+      }
+      
+      (function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        ball.vy += gravity;
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        boundaryDetection();
+        lines.forEach(line => {
+          hitDetection(line)
+          line.draw(context)
+        });
+
+        ball.draw(context);
+      }())
+    }
+    </script>
+  </body>
+</html>
