@@ -24,23 +24,21 @@
             context = canvas.getContext('2d'),
             {width, height} = canvas,
             centerPointY = height / 2,
-            ballA = new Ball(80),
-            ballB = new Ball(40),
+            ballNum = 8,
+            balls = [],
             bouncing = -1.0;
 
-      ballA.mass = 2;
-      ballA.x = canvas.width - 200;
-      ballA.y = canvas.height - 200;
-      ballA.vx = 5;
-      ballA.vy = 5;
-      
-      ballB.mass = 1;
-      ballB.x = 100;
-      ballB.y = 100;
-      ballB.vx = 5;
-      ballB.vy = 5;
+      for (let i = 0; i < ballNum; i++) {
+        let radius = Math.random() * 20 + 15;
+        let ball = new Ball(radius);
+        ball.mass = radius;
+        ball.x = i * 100;
+        ball.y = i * 50;
+        ball.vx = Math.random() * 10 -5;
+        ball.vy = Math.random() * 10 -5;
+        balls.push(ball);
+      }
     
-      const minDist = ballA.radius + ballB.radius;
 
       function checkBoundary(ball) {
         const {x, y, radius} = ball;
@@ -82,6 +80,8 @@
       }
 
       function hitDetection(ballA, ballB) {
+        const minDist = ballA.radius + ballB.radius;
+
         // ballB 相对于 ballA旋转
         const dx = ballB.x - ballA.x,
               dy = ballB.y - ballA.y,
@@ -149,18 +149,24 @@
         window.requestAnimationFrame(draw);
         context.clearRect(0, 0, width, height);
 
-        ballA.x += ballA.vx;
-        ballA.y += ballA.vy;
-        ballB.x += ballB.vx;
-        ballB.y += ballB.vy;
+        balls.forEach(ball => {
+          ball.x += ball.vx;
+          ball.y += ball.vy;
+        })
 
-        hitDetection(ballA, ballB);
+        for (let i = 0; i < ballNum; i++) {
+          for(let j = i + 1; j < ballNum; j++) {
+            let ballA = balls[i],
+                ballB = balls[j];
 
-        checkBoundary(ballA);
-        checkBoundary(ballB);
+            hitDetection(ballA, ballB);
+          }
+        }
 
-        ballA.draw(context);
-        ballB.draw(context);
+        balls.forEach(ball => {
+          checkBoundary(ball);
+          ball.draw(context);
+        })
       }())
     }
     </script>

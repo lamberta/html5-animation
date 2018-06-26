@@ -24,23 +24,20 @@
             context = canvas.getContext('2d'),
             {width, height} = canvas,
             centerPointY = height / 2,
-            ballA = new Ball(80),
-            ballB = new Ball(40),
+            ballNum = 15,
+            balls = [],
             bouncing = -1.0;
 
-      ballA.mass = 2;
-      ballA.x = canvas.width - 200;
-      ballA.y = canvas.height - 200;
-      ballA.vx = 5;
-      ballA.vy = 5;
-      
-      ballB.mass = 1;
-      ballB.x = 100;
-      ballB.y = 100;
-      ballB.vx = 5;
-      ballB.vy = 5;
-    
-      const minDist = ballA.radius + ballB.radius;
+      for (let i = 0; i < ballNum; i++) {
+        let radius = Math.random() * 20 + 15;
+        let ball = new Ball(radius, Math.random() * 0xffffff);
+        ball.mass = radius;
+        ball.x = Math.random() * width;
+        ball.y = Math.random() * height;
+        ball.vx = Math.random() * 10 -5;
+        ball.vy = Math.random() * 10 -5;
+        balls.push(ball);
+      }
 
       function checkBoundary(ball) {
         const {x, y, radius} = ball;
@@ -62,18 +59,6 @@
         }
       }
 
-      function hitProcess(m0, v0, m1, v1) {
-        const totalV = v0 - v1;
-        const v0Final = ((m0 - m1) * v0 + 2 * m1 * v1) /
-                        (m0 + m1);
-        const v1Final = v0Final + totalV;
-
-        return {
-          v0: v0Final,
-          v1: v1Final
-        }
-      }
-
       function rotate(x, y, sin, cos, reverse = false) {
         return {
           x: reverse ? (x * cos + y * sin) : (x * cos - y * sin),
@@ -82,6 +67,8 @@
       }
 
       function hitDetection(ballA, ballB) {
+        const minDist = ballA.radius + ballB.radius;
+
         // ballB 相对于 ballA旋转
         const dx = ballB.x - ballA.x,
               dy = ballB.y - ballA.y,
@@ -99,35 +86,25 @@
         let posA = {x: 0, y: 0},
             posB = rotate(dx, dy, sin, cos, true),
             vA = rotate(ballA.vx, ballA.vy, sin, cos, true),
-            vB = rotate(ballB.vx, ballB.vy, sin, cos, true);
+            vB = rotate(ballB.vx, ballB.vy, sin, cos, true),
+            vxTotal = vA.x - vB.x;
         
-        let innerX = minDist - dist;
 
-        // make sure hit is just at interface
-        if (innerX) {
-          console.log('inner hit')
-          // vA.x * t + vB.x * t = innerX
-          // (vA.x + vB.x) * t = innerX;
-          let t = innerX / (Math.abs(vA.x) + Math.abs(vB.x));
-          let sA = Math.abs(vA.x * t),
-              sB = Math.abs(vB.x * t);
-          
-          posA.x -= sA;
-          posB.x += sB;
-        }
-        
         // hit
-        let {v0: vAX, v1: vBX} = hitProcess(ballA.mass, vA.x, ballB.mass, vB.x);
-        vA.x = vAX;
-        vB.x = vBX;
+        vA.x = ((ballA.mass - ballB.mass) * vA.x + 2 * ballB.mass * vB.x) / 
+               (ballA.mass + ballB.mass);
+        vB.x = vxTotal + vA.x;
 
-        // update position
-        posA.x += vA.x;
-        posB.x += vB.x;
+        let absV = Math.abs(vA.x) + Math.abs(vB.x),
+            overlap = minDist - Math.abs(posA.x - posB.x);
+        
+        // update position - to avoid objects becoming stuck together
+        posA.x += vA.x / absV * overlap;
+        posB.x += vB.x / absV * overlap;
 
         // rotate position back
-        let posAFinal = rotate(posA.x, posA.y, sin, cos),
-            posBFinal = rotate(posB.x, posB.y, sin, cos);
+        let posAFinal = rotate(posA.x, posA.y, sin, cos, false),
+            posBFinal = rotate(posB.x, posB.y, sin, cos, false);
         
         // B先于A计算，避免A的值改动导致B计算不正确
         ballB.x = ballA.x + posBFinal.x;
@@ -136,31 +113,39 @@
         ballA.y = ballA.y + posAFinal.y;
 
         // rotate velocities back
-        let vAFinal = rotate(vA.x, vA.y, sin, cos),
-            vBFinal = rotate(vB.x, vB.y, sin, cos);
+        let vAFinal = rotate(vA.x, vA.y, sin, cos, false),
+            vBFinal = rotate(vB.x, vB.y, sin, cos, false);
 
         ballA.vx = vAFinal.x;
         ballA.vy = vAFinal.y;
         ballB.vx = vBFinal.x;
         ballB.vy = vBFinal.y;
       }
+
+      function move(ball) {
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        checkBoundary(ball);
+      }
       
       (function draw(){
         window.requestAnimationFrame(draw);
         context.clearRect(0, 0, width, height);
 
-        ballA.x += ballA.vx;
-        ballA.y += ballA.vy;
-        ballB.x += ballB.vx;
-        ballB.y += ballB.vy;
+        balls.forEach(ball => move(ball))
 
-        hitDetection(ballA, ballB);
+        for (let i = 0, len = ballNum - 1; i < len; i++) {
+          for(let j = i + 1; j < ballNum; j++) {
+            let ballA = balls[i],
+                ballB = balls[j];
 
-        checkBoundary(ballA);
-        checkBoundary(ballB);
+            hitDetection(ballA, ballB);
+          }
+        }
 
-        ballA.draw(context);
-        ballB.draw(context);
+        balls.forEach(ball => {
+          ball.draw(context);
+        })
       }())
     }
     </script>
