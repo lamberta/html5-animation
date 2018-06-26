@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script type="module">
+    import Ball from './classes/ball.js'
+
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            centerPointY = height / 2,
+            ballA = new Ball(80),
+            ballB = new Ball(40),
+            bouncing = -1.0;
+
+      ballA.mass = 2;
+      ballA.x = canvas.width - 200;
+      ballA.y = canvas.height - 200;
+      ballA.vx = 5;
+      ballA.vy = 5;
+      
+      ballB.mass = 1;
+      ballB.x = 100;
+      ballB.y = 100;
+      ballB.vx = 5;
+      ballB.vy = 5;
+    
+      const minDist = ballA.radius + ballB.radius;
+
+      function checkBoundary(ball) {
+        const {x, y, radius} = ball;
+
+        if (x - radius < 0) {
+          ball.x = radius;
+          ball.vx *= bouncing;
+        } else if (x + radius > width) {
+          ball.x = width - radius;
+          ball.vx *= bouncing;
+        }
+
+        if (y - radius < 0) {
+          ball.y = radius;
+          ball.vy *= bouncing;
+        } else if (y + radius > height) {
+          ball.y = height - radius;
+          ball.vy *= bouncing;
+        }
+      }
+
+      function hitProcess(m0, v0, m1, v1) {
+        const totalV = v0 - v1;
+        const v0Final = ((m0 - m1) * v0 + 2 * m1 * v1) /
+                        (m0 + m1);
+        const v1Final = v0Final + totalV;
+
+        return {
+          v0: v0Final,
+          v1: v1Final
+        }
+      }
+
+      function rotate(x, y, sin, cos, reverse = false) {
+        return {
+          x: reverse ? (x * cos + y * sin) : (x * cos - y * sin),
+          y: reverse ? (y * cos - y * sin) : (x * cos + y * sin)
+        }
+      }
+
+      function hitDetection(ballA, ballB) {
+        // ballB 相对于 ballA旋转
+        const dx = ballB.x - ballA.x,
+              dy = ballB.y - ballA.y,
+              dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist >= minDist) {
+          return;
+        }
+
+        let angle = Math.atan2(dy, dx),
+            sin = Math.sin(angle),
+            cos = Math.cos(angle);
+
+        // rotate
+        let posA = {x: 0, y: 0},
+            posB = rotate(dx, dy, sin, cos, true),
+            vA = rotate(ballA.vx, ballA.vy, sin, cos, true),
+            vB = rotate(ballB.vx, ballB.vy, sin, cos, true);
+        
+        let innerX = minDist - dist;
+
+        // make sure hit is just at interface
+        if (innerX) {
+          console.log('inner hit')
+          // vA.x * t + vB.x * t = innerX
+          // (vA.x + vB.x) * t = innerX;
+          let t = innerX / (Math.abs(vA.x) + Math.abs(vB.x));
+          let sA = Math.abs(vA.x * t),
+              sB = Math.abs(vB.x * t);
+          
+          posA.x -= sA;
+          posB.x += sB;
+        }
+        
+        // hit
+        let {v0: vAX, v1: vBX} = hitProcess(ballA.mass, vA.x, ballB.mass, vB.x);
+        vA.x = vAX;
+        vB.x = vBX;
+
+        // update position
+        posA.x += vA.x;
+        posB.x += vB.x;
+
+        // rotate position back
+        let posAFinal = rotate(posA.x, posA.y, sin, cos),
+            posBFinal = rotate(posB.x, posB.y, sin, cos);
+        
+        // B先于A计算，避免A的值改动导致B计算不正确
+        ballB.x = ballA.x + posBFinal.x;
+        ballB.y = ballA.y + posBFinal.y;
+        ballA.x = ballA.x + posAFinal.x;
+        ballA.y = ballA.y + posAFinal.y;
+
+        // rotate velocities back
+        let vAFinal = rotate(vA.x, vA.y, sin, cos),
+            vBFinal = rotate(vB.x, vB.y, sin, cos);
+
+        ballA.vx = vAFinal.x;
+        ballA.vy = vAFinal.y;
+        ballB.vx = vBFinal.x;
+        ballB.vy = vBFinal.y;
+      }
+      
+      (function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        ballA.x += ballA.vx;
+        ballA.y += ballA.vy;
+        ballB.x += ballB.vx;
+        ballB.y += ballB.vy;
+
+        hitDetection(ballA, ballB);
+
+        checkBoundary(ballA);
+        checkBoundary(ballB);
+
+        ballA.draw(context);
+        ballB.draw(context);
+      }())
+    }
+    </script>
+  </body>
+</html>
