@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import Ball from './classes/ball.js'
+    import {colorToRGB} from '../include/utils.js'
+
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            centerPointY = height / 2,
+            particles = [],
+            numParticles = 30,
+            springAmount = 0.001,
+            minDist = 100;
+
+      for (let i = 0; i < numParticles; i++) {
+        const ball = new Ball(5, '#ffffff');
+        ball.x = Math.random() * width;
+        ball.y = Math.random() * height;
+        ball.vx = Math.random() * 6 - 3;
+        ball.vy = Math.random() * 6 - 3;
+        ball.mass = 1;
+        particles.push(ball)
+      }
+
+      function spring(partA, partB) {
+        const dx = partB.x - partA.x,
+              dy = partB.y - partA.y,
+              dist = Math.sqrt(dx * dx + dy * dy);
+        
+        if (dist < minDist) {
+          context.strokeStyle = colorToRGB('#ffffff', 1 - dist / minDist);
+          context.beginPath();
+          context.moveTo(partA.x, partA.y);
+          context.lineTo(partB.x, partB.y)
+          context.stroke()
+
+          const ax = dx * springAmount,
+                ay = dy * springAmount;
+
+          partA.vx += ax;
+          partA.vy += ay;
+          partB.vx -= ax;
+          partB.vy -= ay;
+        }
+      }
+
+      function moveAround(ball) {
+        if (ball.x > width) {
+          ball.x = 0;
+        } else if (ball.x < 0) {
+          ball.x = width;
+        }
+
+        if (ball.y > height) {
+          ball.y = 0;
+        } else if (ball.y < 0) {
+          ball.y = height
+        }
+      }
+
+      (function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < numParticles; i++) {
+          const partA = particles[i];
+          partA.x += partA.vx;
+          partA.y += partA.vy;
+          moveAround(partA);
+
+          for (let j = i + 1; j < numParticles; j++) {
+            const partB = particles[j];
+            
+            spring(partA, partB);
+          }
+        }
+
+        particles.forEach(ball => {
+          ball.draw(context)
+        });
+      }())
+    }
+    </script>
+  </body>
+</html>
