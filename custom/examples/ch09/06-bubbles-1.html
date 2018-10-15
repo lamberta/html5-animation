@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {captureMouse, interCircles, parseColor} from '../include/utils.js'
+    import Ball from './classes/ball.js'
+
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            mouse = captureMouse(canvas),
+            moveBallNum = 10,
+            spring = 0.03;
+      
+      let centerBall = new Ball(100);
+      let moveBalls = [];
+      
+      centerBall.x = width / 2;
+      centerBall.y = height / 2;
+
+      for (let i = 0; i < moveBallNum; i++) {
+        const ballRadius = 10 + Math.random() * 50;
+        const ballColor = parseColor(Math.random() * 0xffffff);
+        const ballSpeedX = 4 - Math.random() * 8;
+        const ballSpeedY = 4 - Math.random() * 8;
+        const x = Math.random() * width;
+        const y = Math.random() * height;
+        const ball = new Ball(ballRadius, ballColor)
+        ball.vx = ballSpeedX;
+        ball.vy = ballSpeedY;
+        ball.x = x;
+        ball.y = y;
+        moveBalls.push(ball)
+      }
+
+      function boundaryDetection(ball) {
+        if (ball.y - ball.radius < 0) {
+          ball.y = ball.radius;
+          ball.vy = Math.abs(ball.vy);
+        }
+        if (ball.y + ball.radius > height) {
+          ball.y = height - ball.radius;
+          ball.vy = Math.abs(ball.vy) * -1;
+        }
+        if (ball.x - ball.radius < 0) {
+          ball.x = ball.radius;
+          ball.vx = Math.abs(ball.vx);
+        }
+        if (ball.x + ball.radius > width) {
+          ball.x = width - ball.radius;
+          ball.vx = Math.abs(ball.vx) * -1;
+        }
+      }
+
+      function centerBallDetection(ball) {
+        const dx = ball.x - centerBall.x,
+              dy = ball.y - centerBall.y,
+              dist = Math.sqrt(dx * dx + dy * dy),
+              minDist = ball.radius + centerBall.radius;
+        
+        if (dist < minDist) {
+          const angle = Math.atan2(dy, dx),
+                tx = centerBall.x + minDist * Math.cos(angle),
+                ty = centerBall.y + minDist * Math.sin(angle);
+
+          ball.vx += (tx - ball.x) * spring;
+          ball.vy += (ty - ball.y) * spring;
+        }
+      }
+      
+      (function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        moveBalls.forEach(ball => {
+          boundaryDetection(ball);
+          centerBallDetection(ball);
+          ball.x += ball.vx;
+          ball.y += ball.vy;
+          ball.draw(context);
+        });
+        centerBall.draw(context);
+      }())
+    }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script type="module">
+    import {captureMouse} from '../include/utils.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            mouse = captureMouse(canvas);
+
+      const {width, height} = canvas;
+      const pointSize = 4;
+      const pointFix = pointSize / 2;
+      const point = {
+        x: width / 2,
+        y: height / 2,
+        color: '#000000'
+      };
+
+      context.lineWidth = 2;
+
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        context.fillStyle = point.color;
+        context.fillRect(point.x - pointFix, point.y - pointFix, pointSize, pointSize);
+
+        context.beginPath();
+        context.moveTo(point.x, point.y);
+        context.lineTo(mouse.x, mouse.y);
+        context.closePath();
+        context.stroke();
+
+        const dx = point.x - mouse.x;
+        const dy = point.y - mouse.y;
+        const distance = Math.sqrt(dx * dx, dy * dy);
+        console.log(`the distance of pointA and pointB is ${distance}`);
+      }());
+    };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {captureTouch, circleContainsPoint} from '../include/utils.js';
+    import Ball from './classes/ball.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            touch = captureTouch(canvas),
+            {width, height} = canvas,
+            ball = new Ball();
+
+      ball.x = width / 2;
+      ball.y = height / 2;
+      ball.draw(context);
+
+      canvas.addEventListener('touchstart', () => {
+        if (circleContainsPoint(ball, touch)) {
+          console.log('touchstart in the ball')
+        } else {
+          console.log('touchstart out the ball')
+        }
+      }, false)
+      canvas.addEventListener('touchmove', () => {
+        if (circleContainsPoint(ball, touch)) {
+          console.log('touchmove in the ball')
+        } else {
+          console.log('touchmove out the ball')
+        }
+      }, false)
+      canvas.addEventListener('touchend', () => {
+        console.log('touchend in canvas')
+      }, false)
+    }
+    </script>
+  </body>
+</html>

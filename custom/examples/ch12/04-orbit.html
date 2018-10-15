@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script type="module">
+    import Ball from './classes/ball.js'
+
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            centerPointY = height / 2,
+            particles = [],
+            numParticles = 2;
+
+      const sun = new Ball(100, '#ffff00');
+      sun.x = width / 2;
+      sun.y = height / 2;
+      sun.mass = 10000;
+      particles.push(sun);
+
+      const planet = new Ball(10, '#00ff00');
+      planet.x = canvas.width / 2 + 200;
+      planet.y = canvas.height / 2;
+      planet.vy = 7;
+      planet.mass = 1;
+      particles.push(planet);
+
+      function gravity(partA, partB) {
+        const dx = partB.x - partA.x,
+              dy = partB.y - partA.y,
+              distQ = dx * dx + dy * dy,
+              dist = Math.sqrt(distQ),
+              force = partA.mass * partB.mass / distQ,
+              forceX = force * dx / dist,
+              forceY = force * dy / dist;
+        
+        partA.vx += forceX / partA.mass;
+        partA.vy += forceY / partA.mass;
+        partB.vx -= forceX / partB.mass;
+        partB.vy -= forceY / partB.mass;
+      }
+
+      function rotate(x, y, sin, cos, reverse = false) {
+        return {
+          x: reverse ? (x * cos + y * sin) : (x * cos - y * sin),
+          y: reverse ? (y * cos - x * sin) : (y * cos + x * sin)
+        }
+      }
+
+      function hitDetection(ballA, ballB) {
+        const minDist = ballA.radius + ballB.radius;
+
+        // ballB 相对于 ballA旋转
+        const dx = ballB.x - ballA.x,
+              dy = ballB.y - ballA.y,
+              dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist >= minDist) {
+          return;
+        }
+
+        let angle = Math.atan2(dy, dx),
+            sin = Math.sin(angle),
+            cos = Math.cos(angle);
+
+        // rotate
+        let posA = {x: 0, y: 0},
+            posB = rotate(dx, dy, sin, cos, true),
+            vA = rotate(ballA.vx, ballA.vy, sin, cos, true),
+            vB = rotate(ballB.vx, ballB.vy, sin, cos, true),
+            vxTotal = vA.x - vB.x;
+        
+
+        // hit
+        vA.x = ((ballA.mass - ballB.mass) * vA.x + 2 * ballB.mass * vB.x) / 
+               (ballA.mass + ballB.mass);
+        vB.x = vxTotal + vA.x;
+
+        let absV = Math.abs(vA.x) + Math.abs(vB.x),
+            overlap = minDist - Math.abs(posA.x - posB.x);
+        
+        // update position - to avoid objects becoming stuck together
+        posA.x += vA.x / absV * overlap;
+        posB.x += vB.x / absV * overlap;
+
+        // rotate position back
+        let posAFinal = rotate(posA.x, posA.y, sin, cos, false),
+            posBFinal = rotate(posB.x, posB.y, sin, cos, false);
+        
+        // B先于A计算，避免A的值改动导致B计算不正确
+        ballB.x = ballA.x + posBFinal.x;
+        ballB.y = ballA.y + posBFinal.y;
+        ballA.x = ballA.x + posAFinal.x;
+        ballA.y = ballA.y + posAFinal.y;
+
+        // rotate velocities back
+        let vAFinal = rotate(vA.x, vA.y, sin, cos, false),
+            vBFinal = rotate(vB.x, vB.y, sin, cos, false);
+
+        ballA.vx = vAFinal.x;
+        ballA.vy = vAFinal.y;
+        ballB.vx = vBFinal.x;
+        ballB.vy = vBFinal.y;
+      }
+
+      (function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+
+        for (let i = 0; i < numParticles; i++) {
+          const partA = particles[i];
+          partA.x += partA.vx;
+          partA.y += partA.vy;
+          for (let j = i + 1; j < numParticles; j++) {
+            const partB = particles[j];
+            
+            hitDetection(partA, partB);
+            gravity(partA, partB);
+          }
+        }
+
+        particles.forEach(ball => {
+          ball.draw(context)
+        });
+      }())
+    }
+    </script>
+  </body>
+</html>

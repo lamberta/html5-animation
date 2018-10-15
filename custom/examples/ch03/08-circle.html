@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script type="module">
+    import '../include/utils.js';
+    import Ball from './classes/ball.js'
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            ball = new Ball();
+      const {width, height} = canvas;
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const range = 100;
+      let angle = 0;
+      const angleSpeed = 0.05;
+
+      ;(function draw(){
+        window.requestAnimationFrame(draw, canvas);
+        context.clearRect(0, 0, width, height);
+
+        ball.x = centerX + Math.cos(angle) * range;
+        ball.y = centerY + Math.sin(angle) * range;
+        angle += angleSpeed;
+
+        ball.draw(context);
+      }());
+    };
+    </script>
+  </body>
+</html>

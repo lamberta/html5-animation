@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Segment</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script type="module">
+    import "../include/utils.js";
+    import Segment from './classes/segment.js'
+    import Slider from './classes/slider.js'
+
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        {width, height} = canvas,
+        segment1 = new Segment(100, 20),
+        slider1 = new Slider(-90, 90, 0),
+        segment2 = new Segment(100, 20),
+        slider2 = new Slider(-160, 0, 0);
+      
+      segment1.x = 50;
+      segment1.y = (height - segment1.height) / 2;
+      slider1.x = 300;
+      slider1.y = (height - slider1.height) / 2; 
+      slider1.captureMouse(canvas);
+      slider1.onchange = draw;
+
+      slider2.x = 350;
+      slider2.y = (height - slider2.height) / 2; 
+      slider2.captureMouse(canvas);
+      slider2.onchange = draw;
+      
+      function draw(){
+        context.clearRect(0, 0, width, height);
+
+        segment1.rotation = slider1.value * Math.PI / 180;
+        const pin = segment1.getPin()
+
+        segment2.x = pin.x;
+        segment2.y = pin.y;
+        segment2.rotation = segment1.rotation + slider2.value * Math.PI / 180;
+
+        segment1.draw(context)
+        slider1.draw(context)
+        segment2.draw(context)
+        slider2.draw(context)
+      }
+
+      draw();
+    };
+    </script>
+  </body>
+</html>

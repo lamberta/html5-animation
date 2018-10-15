@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    
+    <script type="module">
+    import '../include/utils.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d');
+      const {width, height} = canvas;
+      const centerY = height / 2;
+      let posX = 0;
+      let posY = centerY;
+      let angle = 0;
+      const angleSpeed = 0.05;
+      const speedX = 1;
+      const range = 50;
+
+      // 宽度太小，曲线不会很平滑
+      context.lineWidth = 2;
+
+      ;(function draw(){
+        window.requestAnimationFrame(draw, canvas);
+
+        // canvas的坐标系不一样 
+        // Y轴越大越向下
+        // 为了使得曲线一开始走正向
+        // 需要反向的函数波形
+        angle -= angleSpeed;
+
+        context.beginPath();
+        context.moveTo(posX, posY);
+
+        posX += speedX;
+        posY = centerY + Math.sin(angle) * range;
+
+        context.lineTo(posX, posY);
+        context.stroke();
+
+      }());
+    };
+    </script>
+  </body>
+</html>

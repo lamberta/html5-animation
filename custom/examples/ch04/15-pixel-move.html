@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {captureMouse} from '../include/utils.js'
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            mouse = captureMouse(canvas),
+            {width, height} = canvas;
+      
+      ;(function draw() {
+        window.requestAnimationFrame(draw);
+        // context.clearRect(0, 0, width, height);
+        
+        for (let i = 0; i < width; i += 10) {
+          const color = i % 20 === 0 ? '#f00' : (i % 30 === 0 ? '#0f0' : '#00f');
+          context.fillStyle = color;
+          context.fillRect(i, 0, 10, height);
+        }
+
+        let imagedata = context.getImageData(0, 0, width, height);
+        let pixels = imagedata.data;
+
+        for (let y = 0; y < imagedata.height; y++) {
+          for (let x = 0; x < imagedata.width; x++) {
+            const dx = x - mouse.x,
+                  dy = y - mouse.y,
+                  dist = Math.sqrt(dx * dx + dy * dy);
+
+            const offset = (x + y * imagedata.width) * 4,
+                  r = pixels[offset],
+                  g = pixels[offset + 1],
+                  b = pixels[offset + 2];
+
+            pixels[offset] = Math.cos(r * dist * 0.001) * 256;
+            pixels[offset + 1] = Math.sin(g * dist * 0.001) * 256;
+            pixels[offset + 2] = Math.cos(b * dist * 0.0005) * 256;
+          }
+        }
+
+        context.putImageData(imagedata, 0, 0);
+      }());
+    }
+    </script>
+  </body>
+</html>

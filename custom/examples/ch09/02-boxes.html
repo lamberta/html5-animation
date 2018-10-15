@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {intersects} from '../include/utils.js'
+    import Box from './classes/box.js'
+
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            grativity = 0.2;
+      let box = null;
+      let stopedBoxs = [];
+      let isGameOver = false;
+      
+      function createBox() {
+        const minSize = 10,
+              maxSizeAdd = 40;
+        
+        const w = minSize + Math.random() * maxSizeAdd;
+        const h = minSize + Math.random() * maxSizeAdd;
+        const x = Math.random() * width;
+
+        box = new Box(w, h);
+        box.vy = 1;
+        box.x = x;
+        box.y = 0;
+      }
+
+      function detectionHit() {
+        let isHit = false;
+        if (box.y + box.height >= height) {
+          box.y = height - box.height;
+          isHit = true;
+        }
+
+        if (!isHit && stopedBoxs.length) {
+          for (let i = 0, len = stopedBoxs.length; i < len; i++) {
+            let stopedBox = stopedBoxs[i];
+            if (intersects(box, stopedBox)) {
+              box.y = stopedBox.y - box.height;
+              isHit = true
+              break;
+            }
+          }
+        }
+
+        return isHit
+      }
+
+      function addStopedBox(box) {
+        stopedBoxs.push(box);
+        stopedBoxs = stopedBoxs.sort((a, b) => a.y - b.y);
+        if (box.y <= 0) {
+          isGameOver = true;
+        }
+      }
+
+      createBox();
+
+      (function draw(){
+        if (isGameOver) {
+          console.log('Game Over!');
+          return;
+        }
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        // clearBox();
+
+        box.vy += grativity;
+        box.y += box.vy;
+
+        if (detectionHit()) {
+          addStopedBox(box)
+          if (!isGameOver) {
+            createBox()
+          }
+        }
+        stopedBoxs.forEach(stopedBox => stopedBox.draw(context))
+        box.draw(context)
+      }())
+    }
+    </script>
+  </body>
+</html>

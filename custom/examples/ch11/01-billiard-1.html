@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import Ball from './classes/ball.js'
+
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            centerPointY = height / 2,
+            ballA = new Ball(),
+            ballB = new Ball();
+
+      ballA.x = ballA.radius;
+      ballA.y = centerPointY;
+      ballA.vx = 1;
+      ballA.mass = 2;
+
+      ballB.x = width - ballB.radius;
+      ballB.y = centerPointY;
+      ballB.vx = -1;
+      ballB.mass = 1;
+
+      function getSpeedAfterHit(ballA, ballB) {
+        let up = (ballA.mass - ballB.mass) * ballA.vx + 2 * ballB.mass * ballB.vx
+        let down = ballA.mass + ballB.mass
+        return up / down
+      }
+
+      function hitDetection(ballA, ballB) {
+        if (Math.abs(ballA.x - ballB.x) <= (ballA.radius + ballB.radius)) {
+          const totalMess = ballA.mass + ballB.mass,
+            vxAFinal = getSpeedAfterHit(ballA, ballB),
+            vxBFinal = getSpeedAfterHit(ballB, ballA);
+
+          console.log({vxAFinal, vxBFinal});
+          ballA.vx = vxAFinal;
+          ballB.vx = vxBFinal;
+        }
+      }
+      
+      (function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        hitDetection(ballA, ballB);
+        ballA.x += ballA.vx;
+        ballB.x += ballB.vx;
+
+        ballA.draw(context);
+        ballB.draw(context);
+      }())
+    }
+    </script>
+  </body>
+</html>

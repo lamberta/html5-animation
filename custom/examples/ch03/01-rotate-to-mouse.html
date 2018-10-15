@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Rotate to Mouse</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <aside>Move mouse on canvas element.</aside>
+    
+    <script type="module">
+    import {captureMouse} from '../include/utils.js'
+    import Arrow from './classes/arrow.js'
+    window.onload = () => {
+      const canvas = document.getElementById('canvas')
+      const context = canvas.getContext('2d')
+      let mouse = captureMouse(canvas)
+      let arrow = new Arrow()
+      arrow.x = canvas.width / 2
+      arrow.y = canvas.height / 2
+
+      ;(function drawFrame () {
+        window.requestAnimationFrame(drawFrame, canvas)
+        context.clearRect(0, 0, canvas.width, canvas.height)
+
+        const dx = mouse.x - arrow.x
+        const dy = mouse.y - arrow.y
+
+        arrow.rotation = Math.atan2(dy, dx)
+        arrow.draw(context)
+      }())
+    };
+    </script>
+  </body>
+</html>

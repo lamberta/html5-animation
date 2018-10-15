@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Segment</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script type="module">
+    import "../include/utils.js";
+    import Segment from './classes/segment.js'
+
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
+        {width, height} = canvas,
+        segment1 = new Segment(100, 20),
+        segment2 = new Segment(100, 20);
+      
+      let circle = 0,
+          angleSpeed = 0.02;
+      segment1.x = 150;
+      segment1.y = (height - segment1.height) / 2;
+      
+      (function draw(){
+        requestAnimationFrame(draw)
+        context.clearRect(0, 0, width, height);
+
+        circle += angleSpeed;
+        const angle = Math.sin(circle) * 90 * Math.PI /180;
+
+        segment1.rotation = angle;
+        const pin = segment1.getPin()
+
+        segment2.x = pin.x;
+        segment2.y = pin.y;
+        segment2.rotation = segment1.rotation + angle;
+
+        segment1.draw(context)
+        segment2.draw(context)
+      }())
+    };
+    </script>
+  </body>
+</html>

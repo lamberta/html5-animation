@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Segment</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <script type="module">
+    import "../include/utils.js";
+    import Segment from './classes/segment.js'
+    import Slider from './classes/slider.js'
+
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          {width, height} = canvas,
+          segmentWidth = 100,
+          segmentHeight = 20,
+          segment = new Segment(segmentWidth, segmentHeight),
+          slider = new Slider(-90, 90, 0);
+      
+      segment.x = 100;
+      segment.y = (height - segment.height) / 2;
+      slider.captureMouse(canvas);
+      slider.x = 300;
+      slider.y = (height - slider.height) / 2; 
+      slider.onchange = draw;
+      
+      function draw(){
+        context.clearRect(0, 0, width, height);
+
+        segment.rotation = slider.value * Math.PI / 180;
+        segment.draw(context)
+        slider.draw(context)
+      }
+
+      draw();
+    };
+    </script>
+  </body>
+</html>

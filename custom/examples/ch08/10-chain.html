@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {captureMouse} from '../include/utils.js';
+    import Ball from './classes/ball.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            mouse = captureMouse(canvas),
+            ball1 = new Ball(),
+            ball2 = new Ball(),
+            ball3 = new Ball(),
+            spring = 0.03,
+            grativity = 2,
+            friction = 0.9;
+
+      function follow(ball, target) {
+        ball.vx += (target.x - ball.x) * spring;
+        ball.vy += (target.y - ball.y) * spring;
+
+        ball.vy += grativity;
+
+        ball.vx *= friction;
+        ball.vy *= friction;
+
+
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        context.beginPath();
+        context.moveTo(ball.x, ball.y);
+        context.lineTo(target.x, target.y);
+        context.closePath();
+        context.stroke();
+
+      }
+      
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        follow(ball1, mouse);
+        follow(ball2, ball1);
+        follow(ball3, ball2);
+        ball1.draw(context)
+        ball2.draw(context)
+        ball3.draw(context)
+      }());
+    }
+    </script>
+  </body>
+</html>

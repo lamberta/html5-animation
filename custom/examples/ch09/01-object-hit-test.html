@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+    <style type="text/css">
+      #canvas {
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {captureMouse, rectContainsPoint} from '../include/utils.js'
+    import Ball from './classes/ball.js'
+    import Box from './classes/box.js'
+
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            mouse = captureMouse(canvas);
+      
+      let centerBall = new Ball(),
+          centerBox = new Box(80, 80, 'transparent');
+      
+      centerBall.x = width / 2;
+      centerBall.y = height / 2;
+      centerBox.x = centerBall.x - 40;
+      centerBox.y = centerBall.y - 40;
+      
+      let mouseBall = new Ball(),
+          mouseBox = new Box(80, 80, 'transparent');
+
+      (function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        mouseBall.x = mouse.x;
+        mouseBall.y = mouse.y;
+        mouseBox.x = mouse.x - 40;
+        mouseBox.y = mouse.y - 40;
+
+        if (rectContainsPoint(centerBox, mouseBox)) {
+          console.log('hit!')
+        } else {
+          console.log('not hit!')
+        }
+
+        centerBall.draw(context);
+        centerBox.draw(context);
+        mouseBall.draw(context);
+        mouseBox.draw(context);
+      }())
+    }
+    </script>
+  </body>
+</html>

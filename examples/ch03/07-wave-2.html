@@ -33,7 +33,7 @@
         context.moveTo(xpos, ypos);
         //Calculate the new position.
         xpos += xspeed;
-        angle += yspeed;
+        angle -= yspeed; // Coordinate of canvas is different
         ypos = centerY + Math.sin(angle) * range;
         context.lineTo(xpos, ypos);
         context.stroke();

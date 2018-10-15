@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import '../include/utils.js';
+    import keycode from '../../xtras/keycode.js';
+    import Ball from './classes/ball.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            ball = new Ball(),
+            g = 0.01;
+      let ax = 0,
+          ay = 0,
+          vy = 0,
+          vx = 0;
+      let delta = 0.1;
+      
+      ball.x = width / 2;
+      ball.y = height / 2;
+
+      window.addEventListener('keydown', e => {
+        switch (e.keyCode) {
+          case keycode.LEFT:
+            ax = delta * -1;
+            break;
+          case keycode.RIGHT:
+            ax = delta;
+            break;
+          case keycode.UP:
+            ay = delta * -1;
+            break;
+          case keycode.DOWN:
+            ay = delta;
+            break;
+        }
+        console.log({ax, ay})
+      }, false);
+
+      window.addEventListener('keyup', () => {
+        ax = 0;
+        ay = 0;
+      }, false);
+
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        vx += ax;
+        vy += ay;
+
+        vy += g;
+
+        ball.x += vx;
+        ball.y += vy;
+        ball.draw(context);
+      }());
+    }
+    </script>
+  </body>
+</html>

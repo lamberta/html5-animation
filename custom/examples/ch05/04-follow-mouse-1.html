@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bobbing 1</title>
+    <link rel="stylesheet" href="../include/style.css">
+  </head>
+  <body>
+    <header>
+      Example from <a href="http://amzn.com/1430236655?tag=html5anim-20"><em>Foundation HTML5 Animation with JavaScript</em></a>
+    </header>
+    <canvas id="canvas" width="640" height="340"></canvas>
+    
+    <script type="module">
+    import {captureMouse} from '../include/utils.js';
+    import Arrow from './classes/arrow.js';
+    window.onload = function () {
+      const canvas = document.getElementById('canvas'),
+            context = canvas.getContext('2d'),
+            {width, height} = canvas,
+            mouse = captureMouse(canvas),
+            arrow = new Arrow(),
+            v = 4;
+      
+      ;(function draw(){
+        window.requestAnimationFrame(draw);
+        context.clearRect(0, 0, width, height);
+
+        const dx = mouse.x - arrow.x,
+              dy = mouse.y - arrow.y,
+              angle = Math.atan2(dy, dx),
+              vx = Math.cos(angle) * v,
+              vy = Math.sin(angle) * v;
+
+        arrow.x += vx;
+        arrow.y += vy;
+        arrow.rotation = angle;
+
+        arrow.draw(context);
+      }());
+    }
+    </script>
+  </body>
+</html>
